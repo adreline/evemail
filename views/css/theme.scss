@@ -1,0 +1,17 @@
+@charset "utf-8";
+$black: #3B413C;
+$white: #EAEAEA;
+$green: #169873;
+$blue: #D77A61;
+$red: #FB3640;
+$grey: hsl(0, 0%, 71%);
+$turquoise: $blue;
+$yellow: $red;
+
+$grey-darker: $grey;
+$grey-dark: $grey;
+
+$scheme-main: $black;
+$scheme-invert: $white;
+
+@import '../../node_modules/bulma/bulma.sass';
