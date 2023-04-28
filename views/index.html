@@ -3,13 +3,14 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
   <link rel="stylesheet" href="./css/app.css">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
   <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
   <title>Hello from Electron renderer!</title>
 </head>
 
-<body>
+<body class="p-4">
   <div class="container">
     <div class="columns">
 
@@ -44,65 +45,76 @@
       <div class="column">
 
         <nav class="navbar">
-          <div class="navbar-brand">
-            <a class="navbar-item" href="https://bulma.io">
-              <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-            </a>
-        
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-            </a>
-          </div>
-        
           <div class="navbar-menu">
             <div class="navbar-start">
 
+              <div class="field is-horizontal">
+                <div class="field-label">
+                  <label class="label">Filter by</label>
+                </div>
+                <div class="control">
+                  <div class="select is-small">
+                    <select>
+                      <option>Select dropdown</option>
+                      <option>With options</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
         
             <div class="navbar-end">
-
+              <div class="field is-horizontal">
+                <div class="field-label">
+                  <label class="label">Criteria</label>
+                </div>
+                <div class="control">
+                  <input class="input is-small" type="date" data-display-mode="default" data-is-range="true" data-close-on-select="false">
+                </div>
+              </div>
             </div>
           </div>
         </nav>
 
-
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Character name</th>
-              <th>Roles</th>
-              <th>Last online</th>
-              <th>Joined on</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>placeholder name</td>
-              <td>initiate, member</td>
-              <td>2023-04-19 16:33:18</td>
-              <td>2021-08-06 10:01:17</td>
-            </tr>
-            <tr>
-              <td>placeholder name</td>
-              <td>initiate, member</td>
-              <td>2023-04-19 16:33:18</td>
-              <td>2021-08-06 10:01:17</td>
-            </tr>
-            <tr>
-              <td>placeholder name</td>
-              <td>initiate, member</td>
-              <td>2023-04-19 16:33:18</td>
-              <td>2021-08-06 10:01:17</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="box">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Character name</th>
+                <th>Roles</th>
+                <th>Last online</th>
+                <th>Joined on</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>placeholder name</td>
+                <td>initiate, member</td>
+                <td>2023-04-19 16:33:18</td>
+                <td>2021-08-06 10:01:17</td>
+              </tr>
+              <tr>
+                <td>placeholder name</td>
+                <td>initiate, member</td>
+                <td>2023-04-19 16:33:18</td>
+                <td>2021-08-06 10:01:17</td>
+              </tr>
+              <tr>
+                <td>placeholder name</td>
+                <td>initiate, member</td>
+                <td>2023-04-19 16:33:18</td>
+                <td>2021-08-06 10:01:17</td>
+              </tr>
+            </tbody>
+          </table>
+  
+        </div>
 
       </div>
 
     </div>
   </div>
 </body>
-
+<script src="../node_modules/bulma-calendar/dist/js/bulma-calendar.min.js"></script>
+<script src="./js/pickDate.js"></script>
 </html>
