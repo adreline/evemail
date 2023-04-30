@@ -1,7 +1,6 @@
 const esi = require('../../esi/eve-esi-meta')
 const { downloadFile } = require('../../download.js')
 const meta = new esi.MetaApi()
-const { promises: Fs } = require('fs');
 
 /**
  * Promises information on the character, that belongs under given sso token,
