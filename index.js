@@ -1,5 +1,6 @@
-const { app, BrowserWindow, session } = require('electron');
+const { app, BrowserWindow, session, ipcMain } = require('electron');
 const { promises: Fs } = require('fs');
+const path = require('path');
 
 const esi = require('./esi/eve-esi');
 const { getEnv } = require('./controller/AskEnv/promiseAskEnv.js');
@@ -73,18 +74,27 @@ function init(){
             console.log('pull complete');
             resolve()
           })
+        }else{
+          resolve()
         }
-        
       })
   })
 }
 
 app.whenReady().then(() => {
-  const dashboard = new BrowserWindow({ });
-  dashboard.loadFile('views/index.html');
+  const dashboard = new BrowserWindow({ 
+    width: 800,
+    height: 600,
+    webPreferences: {
+      preload: path.join(__dirname, './controller/GetDashboard/preloadDashboard.js')
+    }
+  });
+
   init()
   .then(()=>{
     console.log('init finished');
+    ipcMain.handle('getCharacter', () => { return sso.character })
+    return dashboard.loadFile('views/index.html');
   })
   
 })
