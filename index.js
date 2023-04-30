@@ -5,6 +5,7 @@ const path = require('path');
 const { getEnv } = require('./controller/AskEnv/promiseAskEnv.js');
 const { getSSO } = require('./sso.js');
 const { getCharacter, getCharacterPicture } = require('./controller/GetDashboard/promiseProfile.js');
+const { promiseCorpMembers } = require('./controller/GetDashboard/promiseCorpMembers.js');
 let sso = {}
 let env = {}
 
@@ -60,6 +61,7 @@ app.whenReady().then(() => {
   .then(()=>{
     console.log('[index.js] init finished');
     ipcMain.handle('getCharacter', () => { return sso.character })
+    ipcMain.handle('getCorpMembers', () => { return promiseCorpMembers() })
     return dashboard.loadFile('views/index.html');
   })
   
