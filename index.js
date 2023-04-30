@@ -4,6 +4,7 @@ const { promises: Fs } = require('fs');
 const esi = require('./esi/eve-esi');
 const { getEnv } = require('./controller/AskEnv/promiseAskEnv.js');
 const { loginWithSSO } = require('./controller/AskSSO/promiseSSO.js');
+const { getCharacter, getCharacterPicture } = require('./controller/GetDashboard/promiseProfile.js');
 let sso = {}
 let env = {}
 
@@ -55,7 +56,25 @@ function init(){
           sso = data
           Fs.writeFile('./token.json', JSON.stringify(sso))
         }
-        resolve()
+
+        if(!sso.hasOwnProperty('character')){
+          console.log('character data not found, pulling');
+          getCharacter(sso.access_token)
+          .then(character => {
+            sso.character = {
+              id: character.characterID,
+              name: character.characterName
+            }
+            return getCharacterPicture(sso.character.id)
+          })
+          .then(filename => {
+            sso.character.picture = filename
+            Fs.writeFile('./token.json', JSON.stringify(sso))
+            console.log('pull complete');
+            resolve()
+          })
+        }
+        
       })
   })
 }
