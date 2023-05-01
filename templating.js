@@ -12,6 +12,7 @@ function _constructNode(node){
     if(node.hasOwnProperty('src')) nd.setAttribute('src', node.src)
     if(node.hasOwnProperty('href')) nd.setAttribute('href', node.href)
     if(node.hasOwnProperty('type')) nd.setAttribute('type', node.type)
+    if(node.hasOwnProperty('value')) nd.setAttribute('value', node.value)
 
     return nd
 }

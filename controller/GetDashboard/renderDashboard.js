@@ -22,7 +22,8 @@ dashboard.getCharacter()
         { key: "startDate", tag: "td" },
     ]
     for(i in members){
-        prototype[0].id = `c-${members[i].characterId}`
+        prototype[0].name = "selected-members"
+        prototype[0].value = `${members[i].characterId}`
         table_body.appendChild(constructTableRow(members[i],prototype))
     }
 
