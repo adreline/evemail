@@ -15,12 +15,14 @@ dashboard.getCharacter()
     members = localiseDates([ "logonDate", "startDate" ], members)
 
     const prototype = [
-        { key: "characterName", type: "td" },
-        { key: "characterId", type: "td" },
-        { key: "logonDate", type: "td" },
-        { key: "startDate", type: "td" },
+        { tag: "input", type: "checkbox" },
+        { key: "characterName", tag: "td" },
+        { key: "characterId", tag: "td" },
+        { key: "logonDate", tag: "td" },
+        { key: "startDate", tag: "td" },
     ]
     for(i in members){
+        prototype[0].id = `c-${members[i].characterId}`
         table_body.appendChild(constructTableRow(members[i],prototype))
     }
 
