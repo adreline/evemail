@@ -57,8 +57,9 @@ function getEnv(){
                 id: data.id
               }
             };
-            resolve(env)
+            
             Fs.writeFile('./env.json', JSON.stringify(env))
+            .then(()=>{ resolve(env) })
           }
         })
     })

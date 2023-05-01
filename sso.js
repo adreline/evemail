@@ -209,7 +209,7 @@ function ssoAuthorize(){
                 sso.refresh_token = new_sso.refresh_token
                 sso.expires_at = getExpiryTimestamp(new_sso.expires_in)
                 Fs.writeFile('./token.json', JSON.stringify(sso))
-                resolve(sso)
+                .then(()=>{ resolve(sso) })
               })
               .catch(() => {
                 console.log('[sso.js] refreshing the token was not necessary');
@@ -220,7 +220,7 @@ function ssoAuthorize(){
               console.log('[sso.js] received token via sso login');
               data.expires_at = getExpiryTimestamp(data.expires_in)
               Fs.writeFile('./token.json', JSON.stringify(data))
-              resolve(data)
+              .then(()=>{ resolve(data) })
             }
         })
 
