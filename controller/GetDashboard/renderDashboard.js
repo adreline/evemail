@@ -59,7 +59,10 @@ dashboard.getCharacter()
     table.classList.remove('is-hidden')
     select_all_box.addEventListener('change', event => { selectAll(event.currentTarget.checked) }) 
     document.getElementsByName('selected-members').forEach( elem => { elem.addEventListener('change', event => { enableButton() }) })
-    document.getElementById('send-mail-button').addEventListener('click', event => { window.dashboard.putSelectedMembers(getSelectedMembers()) } )
+    document.getElementById('send-mail-button').addEventListener('click', event => { 
+        document.getElementById('send-mail-button').setAttribute('disabled', 'disabled')
+        window.dashboard.putSelectedMembers(getSelectedMembers()) 
+    })
 
 })
 .catch( error => {
