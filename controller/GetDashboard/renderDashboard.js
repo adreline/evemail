@@ -1,6 +1,14 @@
 const pic = document.getElementById('character-picture')
 const characterName = document.getElementById('character-name')
 
+function getSelectedMembers(){
+    let boxes = document.getElementsByName('selected-members')
+    return Array.from(boxes).filter( elem => elem.checked ).map( elem => {
+        let tmp = elem.value.split(':')
+        return { name: tmp[0], id: tmp[1] }
+    })
+}
+
 function selectAll(state){
  let boxes = document.getElementsByName('selected-members')
  boxes.forEach(box => {
@@ -44,13 +52,15 @@ dashboard.getCharacter()
     ]
     for(i in members){
         prototype[0].name = "selected-members"
-        prototype[0].value = `${members[i].characterId}`
+        prototype[0].value = `${members[i].characterName}:${members[i].characterId}`
         table_body.appendChild(constructTableRow(members[i],prototype))
     }
 
     table.classList.remove('is-hidden')
     select_all_box.addEventListener('change', event => { selectAll(event.currentTarget.checked) }) 
     document.getElementsByName('selected-members').forEach( elem => { elem.addEventListener('change', event => { enableButton() }) })
+    document.getElementById('send-mail-button').addEventListener('click', event => { window.dashboard.putSelectedMembers(getSelectedMembers()) } )
+
 })
 .catch( error => {
     const msg = document.getElementById('warning-message')

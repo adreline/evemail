@@ -62,6 +62,7 @@ app.whenReady().then(() => {
     console.log('[index.js] init finished');
     ipcMain.handle('getCharacter', () => { return sso.character })
     ipcMain.handle('getCorpMembers', () => { return promiseCorpMembers() })
+    ipcMain.on('selectedMembers', (event, members) => { console.log(members); })
     return dashboard.loadFile('views/index.html');
   })
   
