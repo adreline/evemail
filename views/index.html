@@ -72,17 +72,26 @@
                   <input class="input is-small" type="date" data-display-mode="default" data-is-range="true" data-close-on-select="false">
                 </div>
               </div>
+              
             </div>
           </div>
         </nav>
 
         <div class="box">
-          <h2 class="subtitle">List of members</h2>
 
+          <div class="field has-addons">
+            <div class="control">
+              <h2 class="subtitle mr-3">List of members</h2>
+            </div>
+            <div class="control">
+              <button id="send-mail-button" class="button is-hidden is-primary" disabled="disabled">Send</button>
+            </div>
+          </div>
+          
           <table id="member-table" class="table is-hidden">
             <thead>
               <tr>
-                <th></th>
+                <th><input id="select-all" type="checkbox"></th>
                 <th>Character name</th>
                 <th>Roles</th>
                 <th>Last online</th>
