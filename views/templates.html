@@ -12,88 +12,53 @@
 
 <body class="p-4">
   <div class="container">
-    <div class="columns">
-
-      <div class="column is-one-fifth">
-
-        <article class="media mb-2">
-          <figure class="media-left">
-            <p class="image is-64x64">
-              <img src="./res/placeholder.jpg">
-            </p>
-          </figure>
-          <div class="media-content">
-            <div class="content">
-              <p>
-                <strong>Not logged in</strong>
-                <br>
-              </p>
-              <a class="is-small">Logout</a>
-            </div>
-          </div>
-        </article>
-
-        <aside class="menu">
-
-          <ul class="menu-list">
-            <li><a>Corporation</a></li>
-            <li><a>Mail templates</a></li>
-          </ul>
-        </aside>
-
-      </div>
-      <div class="column">
-
-        <nav class="navbar">
-          <div class="navbar-menu">
-            <div class="navbar-start">
-                <button class="button is-success">New template</button>
-            </div>
-          </div>
-        </nav>
-
-        <div class="box">
-          <table class="table is-fullwidth">
-            <thead>
-              <tr>
-                <th>Template</th>
-                <th>Created at</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>template 1</td>
-                <td>2023-04-19 16:33:18</td>
-                <td>
-                    <button class="button is-small is-danger">Del</button>
-                    <button class="button is-small is-link">View</button>
-                </td>
-              </tr>
-              <tr>
-                <td>template 2</td>
-                <td>2023-04-19 16:33:18</td>
-                <td>
-                    <button class="button is-small is-danger">Del</button>
-                    <button class="button is-small is-link">View</button>
-                </td>
-              </tr>
-              <tr>
-                <td>template 3</td>
-                <td>2023-04-19 16:33:18</td>
-                <td>
-                    <button class="button is-small is-danger">Del</button>
-                    <button class="button is-small is-link">View</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-  
+    <nav class="navbar">
+      <div class="navbar-menu">
+        <div class="navbar-start">
+            <button id="open-template-editor" value="0" class="button is-success">New template</button>
         </div>
-
       </div>
+    </nav>
+
+    <div class="box">
+      <table class="table is-fullwidth">
+        <thead>
+          <tr>
+            <th>Template</th>
+            <th>Created at</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>template 1</td>
+            <td>2023-04-19 16:33:18</td>
+            <td>
+                <button class="button is-small is-danger">Del</button>
+                <button class="button is-small is-link">View</button>
+            </td>
+          </tr>
+          <tr>
+            <td>template 2</td>
+            <td>2023-04-19 16:33:18</td>
+            <td>
+                <button class="button is-small is-danger">Del</button>
+                <button class="button is-small is-link">View</button>
+            </td>
+          </tr>
+          <tr>
+            <td>template 3</td>
+            <td>2023-04-19 16:33:18</td>
+            <td>
+                <button class="button is-small is-danger">Del</button>
+                <button class="button is-small is-link">View</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
     </div>
-  </div>
+</div>
 </body>
+<script src="../controller/Templates/List/renderTemplatesList.js"></script>
 </html>
