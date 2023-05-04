@@ -18,13 +18,13 @@
         <article class="media mb-2">
           <figure class="media-left">
             <p class="image is-64x64">
-              <img src="./res/placeholder.jpg">
+              <img id="character-picture" src="./res/placeholder.jpg">
             </p>
           </figure>
           <div class="media-content">
             <div class="content">
               <p>
-                <strong>Not logged in</strong>
+                <strong id="character-name">Not logged in</strong>
                 <br>
               </p>
               <a class="is-small">Logout</a>
@@ -35,7 +35,7 @@
         <aside class="menu">
 
           <ul class="menu-list">
-            <li><a>Corporation</a></li>
+            <li><a id="open-dashboard">Corporation</a></li>
             <li><a>Mail templates</a></li>
           </ul>
         </aside>
@@ -61,4 +61,5 @@
     </div>
   </div>
 </body>
+<script src="../controller/Templates/Editor/renderTemplatesEditor.js"></script>
 </html>
