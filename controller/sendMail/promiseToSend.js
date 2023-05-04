@@ -30,7 +30,7 @@ function sendEvemails(targets, template){
     console.log(`[promiseToSend.js] sending to ${targets.length} recipients`);
     targets.forEach( target => {
         console.log(`[promiseToSend.js] sending to ${target.name}`);
-        send( constructMail(template, target.id) )
+        send( constructMail(template, [{ recipient_id: target.id, recipient_type: "character" }]) )
         .then(() => {
             console.log(`[promiseToSend.js] success sending to ${target.name}`);
         })
