@@ -63,6 +63,9 @@ dashboard.getCharacter()
         document.getElementById('send-mail-button').setAttribute('disabled', 'disabled')
         window.dashboard.putSelectedMembers(getSelectedMembers()) 
     })
+    document.getElementById('open-templates-list').addEventListener('click', event => {
+        window.dashboard.openTemplatesList()
+    })
 
 })
 .catch( error => {

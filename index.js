@@ -3,6 +3,8 @@ const { promises: Fs } = require('fs');
 const path = require('path');
 
 const { getEnv } = require('./controller/AskEnv/promiseAskEnv.js');
+const { openTemplatesEditor } = require('./controller/Templates/Editor/promiseTemplatesEditor.js');
+const { promiseTemplatesList } = require('./controller/Templates/List/promiseTemplatesList.js');
 const { getSSO } = require('./sso.js');
 const { getCharacter, getCharacterPicture } = require('./controller/GetDashboard/promiseProfile.js');
 const { promiseCorpMembers } = require('./controller/GetDashboard/promiseCorpMembers.js');
@@ -50,6 +52,7 @@ function init(){
 }
 
 app.whenReady().then(() => {
+
   const dashboard = new BrowserWindow({ 
     width: 800,
     height: 600,
@@ -58,17 +61,43 @@ app.whenReady().then(() => {
     }
   });
 
+  const templatesList = {
+    parent: dashboard,
+    modal: true,
+    width: 800,
+    height: 600,
+    webPreferences: {
+        preload: path.join(__dirname, './controller/Templates/List/preloadTemplatesList.js')
+    }
+  };
+
+  const templatesEditor = {
+    parent: templatesList,
+    modal: true,
+    width: 800,
+    height: 600,
+    webPreferences: {
+        preload: path.join(__dirname, './controller/Templates/Editor/preloadTemplatesEditor.js')
+    }
+  };
+
   init()
   .then(()=>{
     console.log('[index.js] init finished');
     ipcMain.handle('getCharacter', () => { return sso.character })
     ipcMain.handle('getCorpMembers', () => { return promiseCorpMembers() })
+    ipcMain.handle('openTemplatesList', () => { return promiseTemplatesList(new BrowserWindow(templatesList)) })
     ipcMain.on('selectedMembers', (event, members) => { 
         sendEvemails(members, {
           subject: 'test subject',
           body: 'test body'
         })
      })
+
+
+    ipcMain.on('openTemplateEditor', (template) => { return openTemplatesEditor(template, new BrowserWindow(templatesEditor)) })
+
+
     return dashboard.loadFile('views/index.html');
   })
   
