@@ -2,7 +2,10 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const { promises: Fs } = require('fs');
 const path = require('path');
 
+const { buildWindow } = require('./windows.js');
 const { getEnv } = require('./controller/AskEnv/promiseAskEnv.js');
+const TemplatesList = require('./controller/Templates/List/promiseTemplatesList.js');
+const TemplatesEditor = require('./controller/Templates/Editor/promiseTemplatesEditor.js');
 const { getSSO } = require('./sso.js');
 const { getCharacter, getCharacterPicture } = require('./controller/GetDashboard/promiseProfile.js');
 const { promiseCorpMembers } = require('./controller/GetDashboard/promiseCorpMembers.js');
@@ -50,13 +53,7 @@ function init(){
 }
 
 app.whenReady().then(() => {
-  const dashboard = new BrowserWindow({ 
-    width: 800,
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, './controller/GetDashboard/preloadDashboard.js')
-    }
-  });
+  let dashboard = buildWindow('dashboard');
 
   init()
   .then(()=>{

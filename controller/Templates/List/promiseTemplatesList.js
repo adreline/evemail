@@ -1,19 +1,11 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { ipcMain } = require('electron');
 const { promises: Fs } = require('fs');
-const path = require('path');
+const { buildWindow } = require('../../../windows.js');
 
-// const { getSSO } = require('./sso.js');
-// const { getCharacter, getCharacterPicture } = require('./controller/GetDashboard/promiseProfile.js');
-// const { promiseCorpMembers } = require('./controller/GetDashboard/promiseCorpMembers.js');
-// const { sendEvemails } = require('./controller/sendMail/promiseToSend.js');
-// let sso = {}
-// let env = {}
-
-ipcMain.handle('getTemplates', () => { return promiseTemplates() })
-ipcMain.on('deleteTemplate', (template) => { })
-ipcMain.on('viewTemplate', (template) => { })
-
-
+ipcMain.handle('getTemplates', () => { return promiseTemplates() });
+// ipcMain.on('deleteTemplate', (template) => { })
+// ipcMain.on('viewTemplate', (template) => { })
+ipcMain.handle('openTemplatesList', () => { return promiseTemplatesList(buildWindow('templatesList', 'dashboard')) });
 
 function promiseTemplates() {
     return new Promise((resolve, reject) => {
