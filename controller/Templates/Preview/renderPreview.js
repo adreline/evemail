@@ -1,3 +1,4 @@
 preview.onTemplateToPreview((event, template) => {
-    console.log(template);
+    document.getElementById('title').innerHTML = template.subject
+    constructTextPreview(template.body, document.getElementById('body'))
 })

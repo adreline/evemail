@@ -48,7 +48,6 @@ function promiseToDeleteTemplate(id){
     })
 }
 
-ipcMain.on('getTemplate', (id) => promiseTemplate(id))
 function promiseTemplate(id){
     console.log(`[crudTemplates.js] requested preview of template ${id}`);
     return new Promise((resolve, reject) => {
