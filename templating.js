@@ -1,9 +1,3 @@
-function _constructNodeWithText(text, node){
-    let nd = document.createElement(node)
-    let tex_nd = document.createTextNode(text)
-    nd.appendChild(tex_nd)
-    return nd
-}
 function _constructNode(node){
     let nd = document.createElement(node.tag)
     if(node.hasOwnProperty('class')) nd.classList.add(...node.class)
@@ -13,24 +7,19 @@ function _constructNode(node){
     if(node.hasOwnProperty('href')) nd.setAttribute('href', node.href)
     if(node.hasOwnProperty('type')) nd.setAttribute('type', node.type)
     if(node.hasOwnProperty('value')) nd.setAttribute('value', node.value)
+    if(node.hasOwnProperty('text')) nd.appendChild(document.createTextNode(node.text))
 
     return nd
-}
-
-function constructNodes(nodes){
-    let t = []
-    for(i in nodes){
-        let n = nodes[i]
-        n = n.hasOwnProperty('text') ? _constructNodeWithText(n.text, n.tag) : _constructNode(n.tag)
-        t.push( n )
-    }
-    return t
 }
 
 function constructRecyclables(prototype, data, parent){
     for(j in prototype){
         let batch = prototype[j]
-        let node = batch.hasOwnProperty('key') ? _constructNodeWithText( data[batch.key], batch.tag ) : _constructNode(batch)
+        if(batch.hasOwnProperty('key')) batch.text = data[batch.key]
+        let node = _constructNode(batch)
+        if(batch.hasOwnProperty('children')){
+            constructRecyclables(batch.children, data, node)
+        }
         parent.appendChild( node )
     }
     return parent
