@@ -11,55 +11,12 @@
 
 <body class="p-4">
   <div class="container">
-    <div class="columns">
-
-      <div class="column is-one-fifth">
-
-        <article class="media mb-2">
-          <figure class="media-left">
-            <p class="image is-64x64">
-              <img id="character-picture" src="./res/placeholder.jpg">
-            </p>
-          </figure>
-          <div class="media-content">
-            <div class="content">
-              <p>
-                <strong id="character-name">Not logged in</strong>
-                <br>
-              </p>
-              <a class="is-small">Logout</a>
-            </div>
-          </div>
-        </article>
-
-        <aside class="menu">
-
-          <ul class="menu-list">
-            <li><a id="open-dashboard">Corporation</a></li>
-            <li><a>Mail templates</a></li>
-          </ul>
-        </aside>
-
-      </div>
-      <div class="column">
-
-        <nav class="navbar">
-          <div class="navbar-menu">
-            <div class="navbar-start">
-              <div class="buttons">
-                <button class="button is-success">Save</button>
-                <button class="button is-danger">Discard</button>
-              </div>
-            </div>
-          </div>
-        </nav>
-
-        <div class="box">
-          <textarea class="textarea" placeholder="10 lines of textarea" rows="10"></textarea>
-        </div>
-      </div>
+    <div class="box">
+      <button id="save" class="button is-primary">Save</button>
+      <input id="title" type="text" placeholder="mail subject"> 
+      <textarea id="body" class="textarea" placeholder="mail body" rows="10"></textarea>
     </div>
-  </div>
+</div>
 </body>
 <script src="../controller/Templates/Editor/renderTemplatesEditor.js"></script>
 </html>
