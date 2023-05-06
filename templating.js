@@ -21,17 +21,21 @@ function constructTextPreview(text, parent){
     return parent
 }
 
-function constructRecyclables(prototype, data, parent){
+function constructRecyclables(prototype, data = {}, parent = undefined){
+    let root = undefined
     for(j in prototype){
         let batch = prototype[j]
         if(batch.hasOwnProperty('key')) batch.text = data[batch.key]
         let node = _constructNode(batch)
+        console.log(batch);
+        if(parent === undefined && root === undefined) root = node
         if(batch.hasOwnProperty('children')){
             constructRecyclables(batch.children, data, node)
         }
-        parent.appendChild( node )
+        if(parent !== undefined) parent.appendChild( node )
     }
-    return parent
+    console.log(root);
+    return parent === undefined ? root : parent
 }
 
 function localiseDates(keys, source){
@@ -50,4 +54,14 @@ function localiseDates(keys, source){
 function constructTableRow(characters, prot){
     let tr = _constructNode({tag: 'tr'})
     return constructRecyclables(prot, characters, tr)
+}
+
+function constructLog(label, text){
+    let prototype = [
+        { tag: 'p', class: [`has-text-${label}`], children: [
+            { tag: 'time', text: `[${new Date().toLocaleString()}]` },
+            { tag: 'span', text: ` ${text}` }
+        ]}
+    ]
+    return constructRecyclables(prototype)
 }

@@ -7,21 +7,18 @@ const btn_stop = document.getElementById('btn-stop')
 const log = document.getElementById('log')
 
 taskProgress.onTaskProgress((event, progress) => {
-    let node = _constructNode({ tag: 'p', text: `Sent to ${progress.recipient}` })
-    log.prepend(node)
+    log.prepend(constructLog('info', `Sent to ${progress.recipient}`))
     progress_bar_label.innerHTML = `${progress.current}/${progress.total}`
     progress_bar.setAttribute('max', progress.total)
     progress_bar.setAttribute('value', progress.current)
     title.innerHTML = `Sending evemail to ${progress.total} recipients`
 })
 taskProgress.onTaskBegin((event, msg) => {
-    let node = _constructNode({ tag: 'p', text: `Starting task` })
+    log.prepend(constructLog('info', 'Starting task'))
     status_label.innerHTML= `In progress`
-    log.prepend(node)
 })
 taskProgress.onTaskPause((event, msg) => {
-    let node = _constructNode({ tag: 'p', text: `Pausing task for ${msg.time} seconds` })
-    log.prepend(node)
+    log.prepend(constructLog('warning', `Pausing task for ${msg.time} seconds`))
 
     let t = msg.time - 5
     let countdown = setInterval(() => {
@@ -31,16 +28,13 @@ taskProgress.onTaskPause((event, msg) => {
     }, 1000)
 })
 taskProgress.onTaskResume((event, msg) => {
-    let node = _constructNode({ tag: 'p', text: `Resuming task` })
+    log.prepend(constructLog('info', 'Resuming task'))
     status_label.innerHTML= `In progress`
-    log.prepend(node)
 })
 taskProgress.onTaskError((event, msg) => {
-    let node = _constructNode({ tag: 'p', text: `Failed to send to ${msg.recipient}, reason: ${msg.error}` })
-    log.prepend(node)
+    log.prepend(constructLog('warning', `Failed to send to ${msg.recipient}, reason: ${msg.error}`))
 })
 taskProgress.onTaskFinished((event, msg) => {
-    let node = _constructNode({ tag: 'p', text: `Task is finished` })
+    log.prepend(constructLog('success', 'Task is finished'))
     status_label.innerHTML= `Finished`
-    log.prepend(node)
 })

@@ -57,7 +57,7 @@ function trackTask(task){
         })
         task.on('mailer:resume', () => {
             console.log('[promiseToQueue.js] task resumed');
-            taskProgress.webContents.send('task:begin')
+            taskProgress.webContents.send('task:resume')
         })
         task.on('mailer:begin', () => {
             console.log('[promiseToQueue.js] task began');
