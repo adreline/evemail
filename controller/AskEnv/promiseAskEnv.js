@@ -2,6 +2,7 @@ const { ipcMain, BrowserWindow } = require('electron')
 const path = require('path')
 const { promises: Fs } = require('fs');
 const { createHash } = require('crypto');
+const { buildWindow } = require('../../windows.js');
 
 
 /**
@@ -11,11 +12,7 @@ const { createHash } = require('crypto');
  */
 function askForEnv(){
   return new Promise((resolve, reject) => {
-      const askEnv = new BrowserWindow({ 
-        webPreferences: {
-          preload: path.join(__dirname, 'preloadAskEnv.js'),
-        }
-      })
+      let askEnv = buildWindow('askEnv')
       ipcMain.on('getEnv', (event, data) => {
         resolve(data) 
         askEnv.close()
