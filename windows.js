@@ -31,7 +31,13 @@ const windows = {
           webPreferences: {
             preload: path.join(__dirname, './controller/AskEnv/preloadAskEnv.js'),
           }
-      }
+      },
+      templatePreview: {
+        webPreferences: {
+          preload: path.join(__dirname, './controller/Templates/Preview/preloadPreview.js'),
+        }
+    }
+
 }
 
 function buildWindow(target, parent = undefined){

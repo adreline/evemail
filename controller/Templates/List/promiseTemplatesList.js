@@ -1,6 +1,7 @@
 const { ipcMain } = require('electron');
 const { buildWindow } = require('../../../windows.js');
 const CRUD = require('../crudTemplates.js');
+const Previews = require('../Preview/promisePreview.js');
 
 ipcMain.handle('openTemplatesList', () => promiseTemplatesList(buildWindow('templatesList', 'dashboard')));
 
