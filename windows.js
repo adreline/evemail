@@ -36,8 +36,24 @@ const windows = {
         webPreferences: {
           preload: path.join(__dirname, './controller/Templates/Preview/preloadPreview.js'),
         }
+    },
+    askForTemplate: {
+      modal: true,
+      webPreferences: {
+        preload: path.join(__dirname, './controller/SendMail/preloadSelectTemplate.js'),
+      }
+    },
+    askForConfirmation: {
+      modal: true,
+      webPreferences: {
+        preload: path.join(__dirname, './controller/SendMail/preloadConfirmTemplate.js'),
+      }
+    },
+    taskProgress: {
+      webPreferences: {
+        preload: path.join(__dirname, './controller/SendMail/preloadTaskProgress.js'),
+      }
     }
-
 }
 
 function buildWindow(target, parent = undefined){

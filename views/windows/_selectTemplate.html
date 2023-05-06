@@ -3,38 +3,32 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="stylesheet" href="./css/app.css">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
+  <link rel="stylesheet" href="../css/app.css">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
   <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
   <title>Hello from Electron renderer!</title>
 </head>
 
-<body>
+<body class="p-4">
   <div class="container">
-    <section class="section">
-      <h2 class="title">Sending evemail to 2 recipients</h2>
-      <h3 class="subtitle">Pick a template</h3>
-      <div class="box">
-        <div class="menu">
-          <ul class="menu-list">
-            <li><a>template 1</a></li>
-            <li><a>template 2</a></li>
-          </ul>
-        </div>
-      </div>
+    <div class="box">
+      <table id="table" class="table is-fullwidth is-hidden">
+        <thead>
+          <tr>
+            <th>Template</th>
+            <th>Created at</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          
+        </tbody>
+      </table>
 
-
-      <div class="field level">
-        <div class="control level-left">
-          <button class="button is-link is-light">Cancel</button>
-        </div>
-
-        <div class="control level-right">
-          <button class="button is-link">Next</button>
-        </div>
-      </div>
-    </section>
-
+    </div>
+</div>
 </body>
-
+<script src="../../templating.js"></script>
+<script src="../../controller/SendMail/renderSelectTemplate.js"></script>
 </html>

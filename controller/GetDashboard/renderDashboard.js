@@ -60,7 +60,6 @@ dashboard.getCharacter()
     select_all_box.addEventListener('change', event => { selectAll(event.currentTarget.checked) }) 
     document.getElementsByName('selected-members').forEach( elem => { elem.addEventListener('change', event => { enableButton() }) })
     document.getElementById('send-mail-button').addEventListener('click', event => { 
-        document.getElementById('send-mail-button').setAttribute('disabled', 'disabled')
         window.dashboard.putSelectedMembers(getSelectedMembers()) 
     })
     document.getElementById('open-templates-list').addEventListener('click', event => {

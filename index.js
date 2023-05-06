@@ -9,7 +9,7 @@ const TemplatesEditor = require('./controller/Templates/Editor/promiseTemplatesE
 const { getSSO } = require('./sso.js');
 const { getCharacter, getCharacterPicture } = require('./controller/GetDashboard/promiseProfile.js');
 const { promiseCorpMembers } = require('./controller/GetDashboard/promiseCorpMembers.js');
-const { sendEvemails } = require('./controller/sendMail/promiseToSend.js');
+const { startTask: sendEvemails } = require('./controller/SendMail/promiseToQueue.js');
 let sso = {}
 let env = {}
 
@@ -60,12 +60,7 @@ app.whenReady().then(() => {
     console.log('[index.js] init finished');
     ipcMain.handle('getCharacter', () => { return sso.character })
     ipcMain.handle('getCorpMembers', () => { return promiseCorpMembers() })
-    ipcMain.on('selectedMembers', (event, members) => { 
-        sendEvemails(members, {
-          subject: 'test subject',
-          body: 'test body'
-        })
-     })
+    ipcMain.on('selectedMembers', (event, members) => sendEvemails(members))
     return dashboard.loadFile('views/index.html');
   })
   
