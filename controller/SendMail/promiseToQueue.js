@@ -40,20 +40,28 @@ function trackTask(task){
     .then(()=>{
         taskProgress.focus()
         task.on('mailer:progress', progress => {
-            console.log('[promiseToQueue.js] task updated, mailer:progress');
+            console.log('[promiseToQueue.js] task advances');
             taskProgress.webContents.send('task:progress', progress)
         })
         task.on('mailer:error', err => {
-            console.log('[promiseToQueue.js] task updated, mailer:error');
+            console.log('[promiseToQueue.js] task error');
             taskProgress.webContents.send('task:error', err)
         })
         task.on('mailer:pause', err => {
-            console.log('[promiseToQueue.js] task updated, mailer:pause');
+            console.log('[promiseToQueue.js] task paused');
             taskProgress.webContents.send('task:pause', err)
         })
-        task.on('mailer:finished', () => {
+        task.on('mailer:done', () => {
             console.log('[promiseToQueue.js] task finished');
-            taskProgress.webContents.send('task:finished', {})
+            taskProgress.webContents.send('task:done')
+        })
+        task.on('mailer:resume', () => {
+            console.log('[promiseToQueue.js] task resumed');
+            taskProgress.webContents.send('task:begin')
+        })
+        task.on('mailer:begin', () => {
+            console.log('[promiseToQueue.js] task began');
+            taskProgress.webContents.send('task:begin')
         })
         task.emit('mailer:ready')
     })

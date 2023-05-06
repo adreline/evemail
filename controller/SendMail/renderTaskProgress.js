@@ -1,4 +1,4 @@
-const status = document.getElementById('status')
+const status_label = document.getElementById('status')
 const title = document.getElementById('title')
 const progress_bar_label = document.getElementById('label')
 const progress_bar = document.getElementById('progress-bar')
@@ -12,9 +12,21 @@ taskProgress.onTaskProgress((event, progress) => {
     progress_bar_label.innerHTML = `${progress.current}/${progress.total}`
     progress_bar.setAttribute('max', progress.total)
     progress_bar.setAttribute('value', progress.current)
+    title.innerHTML = `Sending evemail to ${progress.total} recipients`
+})
+taskProgress.onTaskBegin((event, msg) => {
+    let node = _constructNode({ tag: 'p', text: `Starting task` })
+    status_label.innerHTML= `In progress`
+    log.prepend(node)
 })
 taskProgress.onTaskPause((event, msg) => {
     let node = _constructNode({ tag: 'p', text: `Pausing task for ${msg.time} seconds` })
+    status_label.innerHTML= `Paused for ${msg.time}s`
+    log.prepend(node)
+})
+taskProgress.onTaskResume((event, msg) => {
+    let node = _constructNode({ tag: 'p', text: `Resuming task` })
+    status_label.innerHTML= `In progress`
     log.prepend(node)
 })
 taskProgress.onTaskError((event, msg) => {
@@ -23,5 +35,6 @@ taskProgress.onTaskError((event, msg) => {
 })
 taskProgress.onTaskFinished((event, msg) => {
     let node = _constructNode({ tag: 'p', text: `Task is finished` })
+    status_label.innerHTML= `Finished`
     log.prepend(node)
 })

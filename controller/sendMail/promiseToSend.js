@@ -12,9 +12,6 @@ function substringbetween(haystack, a, b, offset_a = 0, offset_b = 0){
         haystack.lastIndexOf(b) - b.length + offset_b
     );
 }
-function getDelayInMs(time){
-    return time * Math.pow(10, -4)
-}
 
 
 function send(mail){
@@ -73,6 +70,7 @@ function sendEvemails(targets, template){
                 q.pause()
                 setTimeout(() => { 
                     console.log('[promiseToSend.js] queue will now resume');
+                    task.emit('mailer:resume')
                     q.resume()
                  }, (err.details.remainingTime * Math.pow(10, -4)))
             }
@@ -81,12 +79,15 @@ function sendEvemails(targets, template){
 
         q.drain(() => {
             console.log('[promiseToSend.js] the queue is drained');
-            task.emit('mailer:done', {})
+            task.emit('mailer:done')
         })
         
         task.once('mailer:ready', ()=>{
             console.log('[promiseToSend.js] mailer ready, pushing tasks');
-            setTimeout(() => { q.push(targets) }, 300)
+            setTimeout(() => { 
+                task.emit('mailer:begin')
+                q.push(targets) 
+            }, 300)
             
         })
         resolve(task)
