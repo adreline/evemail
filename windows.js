@@ -26,11 +26,16 @@ const windows = {
         webPreferences: {
             preload: path.join(__dirname, './controller/Templates/Editor/preloadTemplatesEditor.js')
         }
+      },
+      askEnv: {
+          webPreferences: {
+            preload: path.join(__dirname, './controller/AskEnv/preloadAskEnv.js'),
+          }
       }
 }
 
 function buildWindow(target, parent = undefined){
-    console.log(repository);
+  console.log(`[windows.js] building window ${target}/${parent}`);
     if(windows.hasOwnProperty(target)){
         let window = windows[target]
         if(parent !== undefined && repository.hasOwnProperty(parent)){
@@ -42,4 +47,23 @@ function buildWindow(target, parent = undefined){
     }
 }
 
+function closeWindow(target){
+  console.log(`[windows.js] closing window ${target}`);
+  if(repository.hasOwnProperty(target)){
+    let window = BrowserWindow.fromId(repository[target])
+    window.close()
+    delete repository[target]
+  }
+}
+
+function reloadWindow(target){
+  console.log(`[windows.js] reloading window ${target}`);
+  if(repository.hasOwnProperty(target)){
+    let window = BrowserWindow.fromId(repository[target])
+    window.reload()
+  }
+}
+
 exports.buildWindow = buildWindow
+exports.closeWindow = closeWindow
+exports.reloadWindow = reloadWindow
