@@ -7,20 +7,21 @@ const btn_stop = document.getElementById('btn-stop')
 const log = document.getElementById('log')
 
 taskProgress.onTaskProgress((event, progress) => {
-    console.log(progress);
-    log.prepend([
-        _constructNode({ tag: 'p', text: `Sent to ${progress.recipient}` })
-    ])
+    let node = _constructNode({ tag: 'p', text: `Sent to ${progress.recipient}` })
+    log.prepend(node)
     progress_bar_label.innerHTML = `${progress.current}/${progress.total}`
     progress_bar.setAttribute('max', progress.total)
     progress_bar.setAttribute('value', progress.current)
 })
 taskProgress.onTaskPause((event, msg) => {
-    console.log(msg);
+    let node = _constructNode({ tag: 'p', text: `Pausing task for ${msg.time} seconds` })
+    log.prepend(node)
 })
 taskProgress.onTaskError((event, msg) => {
-    console.log(msg);
+    let node = _constructNode({ tag: 'p', text: `Failed to send to ${msg.recipient}, reason: ${msg.error}` })
+    log.prepend(node)
 })
-taskProgress.onTaskFinished(() => {
-    console.log('finished');
+taskProgress.onTaskFinished((event, msg) => {
+    let node = _constructNode({ tag: 'p', text: `Task is finished` })
+    log.prepend(node)
 })
