@@ -12,6 +12,15 @@ function _constructNode(node){
     return nd
 }
 
+function constructTextPreview(text, parent){
+    let lines = text.split("\n");
+    for( i in lines){
+        parent.appendChild( document.createTextNode(lines[i]) )
+        parent.appendChild( document.createElement('br') )
+    }
+    return parent
+}
+
 function constructRecyclables(prototype, data, parent){
     for(j in prototype){
         let batch = prototype[j]
