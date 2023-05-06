@@ -66,7 +66,7 @@ function sendEvemails(targets, template){
             task.emit('mailer:error', {recipient: target.name, error: err.error})
             if(!q.paused){
                 console.log(`[promiseToSend.js] pausing queue for ${err.details.remainingTime}`);
-                task.emit('mailer:pause', { time: err.details.remainingTime * Math.pow(10, -7) })
+                task.emit('mailer:pause', { time: Math.round(err.details.remainingTime * Math.pow(10, -7)) })
                 q.pause()
                 setTimeout(() => { 
                     console.log('[promiseToSend.js] queue will now resume');

@@ -21,8 +21,14 @@ taskProgress.onTaskBegin((event, msg) => {
 })
 taskProgress.onTaskPause((event, msg) => {
     let node = _constructNode({ tag: 'p', text: `Pausing task for ${msg.time} seconds` })
-    status_label.innerHTML= `Paused for ${msg.time}s`
     log.prepend(node)
+
+    let t = msg.time - 5
+    let countdown = setInterval(() => {
+        if(t < 1) clearInterval(countdown)
+        status_label.innerHTML= `Paused for ${t}s`
+        t--
+    }, 1000)
 })
 taskProgress.onTaskResume((event, msg) => {
     let node = _constructNode({ tag: 'p', text: `Resuming task` })
