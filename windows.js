@@ -1,12 +1,13 @@
 const { BrowserWindow } = require("electron");
 const path = require('path');
-
+const app_name = 'Evemailer'
 let repository = {}
 
 const windows = {
     dashboard: { 
         width: 800,
         height: 600,
+        title: `${app_name}`,
         webPreferences: {
           preload: path.join(__dirname, './controller/GetDashboard/preloadDashboard.js')
         }
@@ -15,6 +16,7 @@ const windows = {
         modal: true,
         width: 800,
         height: 600,
+        title: `${app_name} - List of mail templates`,
         webPreferences: {
             preload: path.join(__dirname, './controller/Templates/List/preloadTemplatesList.js')
         }
@@ -23,33 +25,39 @@ const windows = {
         modal: true,
         width: 800,
         height: 600,
+        title: `${app_name} - Create a new template`,
         webPreferences: {
             preload: path.join(__dirname, './controller/Templates/Editor/preloadTemplatesEditor.js')
         }
       },
       askEnv: {
+        title: `${app_name} - Input app id and secret`,
           webPreferences: {
             preload: path.join(__dirname, './controller/AskEnv/preloadAskEnv.js'),
           }
       },
       templatePreview: {
+        title: `${app_name} - Template preview`,
         webPreferences: {
           preload: path.join(__dirname, './controller/Templates/Preview/preloadPreview.js'),
         }
     },
     askForTemplate: {
       modal: true,
+      title: `${app_name} - Choose template`,
       webPreferences: {
         preload: path.join(__dirname, './controller/SendMail/preloadSelectTemplate.js'),
       }
     },
     askForConfirmation: {
       modal: true,
+      title: `${app_name} - Confirm choice`,
       webPreferences: {
         preload: path.join(__dirname, './controller/SendMail/preloadConfirmTemplate.js'),
       }
     },
     taskProgress: {
+      title: `${app_name} - Task progress`,
       webPreferences: {
         preload: path.join(__dirname, './controller/SendMail/preloadTaskProgress.js'),
       }
