@@ -5,3 +5,5 @@ package-lock.json
 bak.json
 views/res/
 templates/db.json
+
+out/
