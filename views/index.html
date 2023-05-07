@@ -43,38 +43,38 @@
       </div>
       <div class="column">
 
-        <nav class="navbar">
-          <div class="navbar-menu">
-            <div class="navbar-start">
-
-              <div class="field is-horizontal">
-                <div class="field-label">
-                  <label class="label">Filter by</label>
-                </div>
-                <div class="control">
-                  <div class="select is-small">
-                    <select>
-                      <option>Select dropdown</option>
-                      <option>With options</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-        
-            <div class="navbar-end">
-              <div class="field is-horizontal">
-                <div class="field-label">
-                  <label class="label">Criteria</label>
-                </div>
-                <div class="control">
-                  <input class="input is-small" type="date" data-display-mode="default" data-is-range="true" data-close-on-select="false">
-                </div>
-              </div>
-              
+        <div class="field">
+          <label class="label">Filter by</label>
+          <div class="control">
+            <div class="select is-small">
+              <select id="filter-mode">
+                <option value="-1">None</option>
+                <option value="0">Last online</option>
+                <option value="1">Inactive for between 3 and 6 months</option>
+                <option value="2">Inactive for more then 6 months</option>
+              </select>
             </div>
           </div>
-        </nav>
+        </div>
+
+        <div id="all-filters" class="field">
+          <label  class="label">Criteria</label>
+          <div class="field has-addons">
+            <div class="control">
+              <button id="btn-filter" class="button is-primary">
+                Filter
+              </button>
+            </div>
+            <div class="control">
+              <input id="date-picker-youngest" class="input is-hidden" type="date">
+            </div>
+            <div class="control">
+              <input id="date-picker-oldest" class="input is-hidden" type="date">
+            </div>
+          </div>
+        </div>
+        
+        
 
         <div class="box">
 
@@ -86,7 +86,7 @@
               <button id="send-mail-button" class="button is-hidden is-primary">Send</button>
             </div>
           </div>
-          
+
           <table id="member-table" class="table is-hidden">
             <thead>
               <tr>
@@ -101,7 +101,7 @@
 
             </tbody>
           </table>
-  
+
         </div>
         <article id="warning-message" class="message is-warning is-hidden">
           <div id="warning-message-body" class="message-body">
@@ -112,8 +112,7 @@
     </div>
   </div>
 </body>
-<script src="../node_modules/bulma-calendar/dist/js/bulma-calendar.min.js"></script>
-<script src="./js/pickDate.js"></script>
 <script src="../templating.js"></script>
 <script src="../controller/GetDashboard/renderDashboard.js"></script>
+
 </html>

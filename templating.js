@@ -27,14 +27,12 @@ function constructRecyclables(prototype, data = {}, parent = undefined){
         let batch = prototype[j]
         if(batch.hasOwnProperty('key')) batch.text = data[batch.key]
         let node = _constructNode(batch)
-        console.log(batch);
         if(parent === undefined && root === undefined) root = node
         if(batch.hasOwnProperty('children')){
             constructRecyclables(batch.children, data, node)
         }
         if(parent !== undefined) parent.appendChild( node )
     }
-    console.log(root);
     return parent === undefined ? root : parent
 }
 
