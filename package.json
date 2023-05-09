@@ -1,7 +1,7 @@
 {
   "name": "evemail",
   "version": "0.8.1",
-  "description": "",
+  "description": "Corporation management tool, for the game eve online, that allows for batch sending of templated evemails, based on criteria.",
   "main": "index.js",
   "scripts": {
     "start": "electron-forge start",

@@ -1,5 +1,11 @@
 module.exports = {
-  packagerConfig: {},
+  packagerConfig: {
+    ignore: [
+      "token.json",
+      "env.json",
+      "templates/db.json"
+    ]
+  },
   rebuildConfig: {},
   makers: [
     {

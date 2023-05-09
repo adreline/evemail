@@ -1,4 +1,13 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
+global.root = app.getAppPath();
+if (require('electron-squirrel-startup')){ 
+  let { handleSquirrelEvent } = require(`${global.root}/Squirrel.js`); 
+  // this should be placed at top of main.js to handle setup events quickly
+if (handleSquirrelEvent()) {
+  // squirrel event handled and app will exit in 1000ms, so don't do anything else
+  return;
+}
+}
 const { promises: Fs } = require('fs');
 const path = require('path');
 
@@ -54,14 +63,12 @@ function init(){
 
 app.whenReady().then(() => {
   let dashboard = buildWindow('dashboard');
-
   init()
   .then(()=>{
     console.log('[index.js] init finished');
     ipcMain.handle('getCharacter', () => { return sso.character })
     ipcMain.handle('getCorpMembers', () => { return promiseCorpMembers() })
     ipcMain.on('selectedMembers', (event, members) => sendEvemails(members))
-    return dashboard.loadFile('views/index.html');
     return dashboard.loadFile(`${global.root}/views/index.html`);
   })
   
