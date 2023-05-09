@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { promises: Fs } = require('fs');
 const path = require('path');
-const { buildWindow, closeWindow, reloadWindow } = require('../../../windows.js');
+const { buildWindow, closeWindow, reloadWindow } = require(`${global.root}/windows.js`);
 
 ipcMain.on('openTemplateEditor', (template) => openTemplatesEditor(template, buildWindow('templatesEditor', 'templatesList')))
 ipcMain.handle('closeTemplatesEditor', () => closeWindow('templatesEditor'))
@@ -11,7 +11,7 @@ function openTemplatesEditor(template, templatesEditor){
     console.log('[promiseTemplatesEditor.js] opening template editor');
     return new Promise((resolve, reject) => {
         templatesEditor.on('close', event => { resolve() })
-        templatesEditor.loadFile('views/editor.html')
+        templatesEditor.loadFile(`${global.root}/views/editor.html`)
     })
 }
 

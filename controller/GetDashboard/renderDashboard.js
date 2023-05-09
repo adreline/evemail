@@ -121,7 +121,7 @@ function clearTable(){
 
 dashboard.getCharacter()
 .then(character => {
-    pic.src = `./res/${character.picture}`
+    pic.src = `${character.picture}`
     characterName.innerText = character.name
     return dashboard.getCorpMembers()
 })

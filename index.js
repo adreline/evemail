@@ -2,14 +2,14 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const { promises: Fs } = require('fs');
 const path = require('path');
 
-const { buildWindow } = require('./windows.js');
-const { getEnv } = require('./controller/AskEnv/promiseAskEnv.js');
-const TemplatesList = require('./controller/Templates/List/promiseTemplatesList.js');
-const TemplatesEditor = require('./controller/Templates/Editor/promiseTemplatesEditor.js');
-const { getSSO } = require('./sso.js');
-const { getCharacter, getCharacterPicture } = require('./controller/GetDashboard/promiseProfile.js');
-const { promiseCorpMembers } = require('./controller/GetDashboard/promiseCorpMembers.js');
-const { startTask: sendEvemails } = require('./controller/SendMail/promiseToQueue.js');
+const { buildWindow } = require(`${global.root}/windows.js`);
+const { getEnv } = require(`${global.root}/controller/AskEnv/promiseAskEnv.js`);
+const TemplatesList = require(`${global.root}/controller/Templates/List/promiseTemplatesList.js`);
+const TemplatesEditor = require(`${global.root}/controller/Templates/Editor/promiseTemplatesEditor.js`);
+const { getSSO } = require(`${global.root}/sso.js`);
+const { getCharacter, getCharacterPicture } = require(`${global.root}/controller/GetDashboard/promiseProfile.js`);
+const { promiseCorpMembers } = require(`${global.root}/controller/GetDashboard/promiseCorpMembers.js`);
+const { startTask: sendEvemails } = require(`${global.root}/controller/SendMail/promiseToQueue.js`);
 let sso = {}
 let env = {}
 
@@ -41,7 +41,7 @@ function init(){
         })
         .then(filename => {
           sso.character.picture = filename
-          Fs.writeFile('./token.json', JSON.stringify(sso))
+          Fs.writeFile(`${global.root}/token.json`, JSON.stringify(sso))
           console.log('[index.js] pull complete');
           resolve()
         })
@@ -62,6 +62,7 @@ app.whenReady().then(() => {
     ipcMain.handle('getCorpMembers', () => { return promiseCorpMembers() })
     ipcMain.on('selectedMembers', (event, members) => sendEvemails(members))
     return dashboard.loadFile('views/index.html');
+    return dashboard.loadFile(`${global.root}/views/index.html`);
   })
   
 })

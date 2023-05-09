@@ -2,7 +2,7 @@ const { ipcMain } = require('electron');
 const { promises: Fs } = require('fs');
 
 const db_stub = '{ "meta": { "i": 0 }, "templates": {}}';
-const db_path = './templates/db.json';
+const db_path = `${global.root}/templates/db.json`;
 
 ipcMain.on('saveTemplate', (event, template) => promiseToSaveTemplate(template))
 function promiseToSaveTemplate(template){

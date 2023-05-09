@@ -1,5 +1,5 @@
-const esi = require('../../esi/eve-esi-meta')
-const { downloadFile } = require('../../download.js')
+const esi = require(`${global.root}/esi/eve-esi-meta`)
+const { downloadFile } = require(`${global.root}/download.js`)
 const meta = new esi.MetaApi()
 
 /**
@@ -31,8 +31,8 @@ function getCharacter(token){
  */
 function getCharacterPicture(id){
     return new Promise((resolve, reject) => {
-        let filename = `${id}_character_picture.jpg`
-        downloadFile(`https://images.evetech.net/characters/${id}/portrait`, `views/res/${filename}`)
+        let filename = `${global.root}/views/res/${id}_character_picture.jpg`
+        downloadFile(`https://images.evetech.net/characters/${id}/portrait`, `${filename}`)
         .then(()=>{
             resolve(filename)
         })

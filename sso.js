@@ -175,10 +175,10 @@ function getExpiryTimestamp(offset){
 function ssoAuthorize(){
 
     return new Promise((resolve, reject) => {
-        Fs.access('./env.json')
+        Fs.access(`${global.root}/env.json`)
         .then(() => {
             console.log('[sso.js] env.json detected, reading');
-            return Fs.readFile('./env.json', { encoding: 'utf8' })
+            return Fs.readFile(`${global.root}/env.json`, { encoding: 'utf8' })
         })
         .catch(() => {
             console.log('[sso.js] env is not set, cannot perform authorization');
@@ -187,11 +187,11 @@ function ssoAuthorize(){
         .then(data => {
             console.log('[sso.js] env received');
             settings = JSON.parse(data)
-            return Fs.access('./token.json')
+            return Fs.access(`${global.root}/token.json`)
         })
         .then(() => {
             console.log('[sso.js] sso token present, reading');
-            return Fs.readFile('./token.json', { encoding: 'utf8' })    
+            return Fs.readFile(`${global.root}/token.json`, { encoding: 'utf8' })    
         })
         .catch(() => {
             console.log('[sso.js] sso token not found, asking for login');
@@ -208,7 +208,7 @@ function ssoAuthorize(){
                 sso.access_token = new_sso.access_token
                 sso.refresh_token = new_sso.refresh_token
                 sso.expires_at = getExpiryTimestamp(new_sso.expires_in)
-                Fs.writeFile('./token.json', JSON.stringify(sso))
+                Fs.writeFile(`${global.root}/token.json`, JSON.stringify(sso))
                 .then(()=>{ resolve(sso) })
               })
               .catch(() => {
@@ -219,7 +219,7 @@ function ssoAuthorize(){
             }else{
               console.log('[sso.js] received token via sso login');
               data.expires_at = getExpiryTimestamp(data.expires_in)
-              Fs.writeFile('./token.json', JSON.stringify(data))
+              Fs.writeFile(`${global.root}/token.json`, JSON.stringify(data))
               .then(()=>{ resolve(data) })
             }
         })

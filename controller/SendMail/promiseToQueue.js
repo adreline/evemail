@@ -1,7 +1,7 @@
 const { ipcMain } = require('electron');
-const { buildWindow } = require('../../windows.js');
-const { promiseTemplate } = require('../Templates/crudTemplates.js');
-const { sendEvemails } = require('./promiseToSend.js');
+const { buildWindow } = require(`${global.root}/windows.js`);
+const { promiseTemplate } = require(`${global.root}/controller/Templates/crudTemplates.js`);
+const { sendEvemails } = require(`${global.root}/controller/SendMail/promiseToSend.js`);
 
 function askForTemplate(){
     console.log('[promiseToQueue.js] select template to send');
@@ -12,7 +12,7 @@ function askForTemplate(){
           console.log('[promiseToQueue.js] template selected');
           askForTemplate.close()
         })
-        askForTemplate.loadFile('views/windows/_selectTemplate.html')
+        askForTemplate.loadFile(`${global.root}/views/windows/_selectTemplate.html`)
     })
 }
 
@@ -25,7 +25,7 @@ function askForConfirmation(template){
             yes_or_no ? resolve() : reject()
             askForConfirmation.close()
         })
-        askForConfirmation.loadFile('views/windows/_mailPreview.html')
+        askForConfirmation.loadFile(`${global.root}/views/windows/_mailPreview.html`)
         .then(()=>{
             console.log('[promiseToQueue.js] sending template for preview');
             askForConfirmation.webContents.send('queue:templateToPreview', template)
@@ -36,7 +36,7 @@ function askForConfirmation(template){
 function trackTask(task){
     console.log('[promiseToQueue.js] opening task tracking');
     let taskProgress = buildWindow('taskProgress')
-    taskProgress.loadFile('views/windows/_taskProgress.html')
+    taskProgress.loadFile(`${global.root}/views/windows/_taskProgress.html`)
     .then(()=>{
         taskProgress.focus()
         task.on('mailer:progress', progress => {

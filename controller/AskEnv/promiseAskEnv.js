@@ -2,7 +2,7 @@ const { ipcMain, BrowserWindow } = require('electron')
 const path = require('path')
 const { promises: Fs } = require('fs');
 const { createHash } = require('crypto');
-const { buildWindow } = require('../../windows.js');
+const { buildWindow } = require(`${global.root}/windows.js`);
 
 
 /**
@@ -17,7 +17,7 @@ function askForEnv(){
         resolve(data) 
         askEnv.close()
       })
-      askEnv.loadFile('views/windows/_askEnv.html')
+      askEnv.loadFile(`${global.root}/views/windows/_askEnv.html`)
   })
 }
 
@@ -31,11 +31,12 @@ function encryptAppSecret(secret){
  * @return {*} 
  */
 function getEnv(){
+  console.log(global.root);
     return new Promise((resolve, reject) => {
-        Fs.access('./env.json')
+        Fs.access(`${global.root}/env.json`)
         .then(()=>{
           console.log('[promiseAskEnv.js] env.json detected, reading');
-          return Fs.readFile('./env.json', { encoding: 'utf8' })
+          return Fs.readFile(`${global.root}/env.json`, { encoding: 'utf8' })
         })
         .catch(()=>{
           console.log('[promiseAskEnv.js] env.json not found, asking for input');
@@ -55,7 +56,7 @@ function getEnv(){
               }
             };
             
-            Fs.writeFile('./env.json', JSON.stringify(env))
+            Fs.writeFile(`${global.root}/env.json`, JSON.stringify(env))
             .then(()=>{ resolve(env) })
           }
         })

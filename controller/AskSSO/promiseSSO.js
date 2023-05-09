@@ -1,4 +1,4 @@
-const sso = require('../../esi/eve-esi/src/sso.js');
+const sso = require(`${global.root}/esi/eve-esi/src/sso.js`);
 /**
  * Promises to receive a sso token. Uses ESI login page.
  *

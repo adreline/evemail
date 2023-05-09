@@ -1,7 +1,7 @@
-const esi = require('../../esi/eve-esi')
+const esi = require(`${global.root}/esi/eve-esi`)
 const EventEmitter = require('events');
-const { PostCharactersCharacterIdMailMail: Evemail } = require('../../esi/eve-esi')
-const { getSSO } = require('../../sso.js');
+const { PostCharactersCharacterIdMailMail: Evemail } = require(`${global.root}/esi/eve-esi`)
+const { getSSO } = require(`${global.root}/sso.js`);
 const { queue } = require('async')
 
 const evemailer = new esi.MailApi()

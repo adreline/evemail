@@ -1,8 +1,8 @@
-const esi = require('../../esi/eve-esi')
+const esi = require(`${global.root}/esi/eve-esi`)
 const corpApi = new esi.CorporationApi()
 const charApi = new esi.CharacterApi()
 
-const { getSSO } = require('../../sso.js');
+const { getSSO } = require(`${global.root}/sso.js`);
 
 /**
  * Promises the corporation id of the given character
