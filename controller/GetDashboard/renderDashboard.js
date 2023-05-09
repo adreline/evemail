@@ -48,7 +48,7 @@ function handleFilters(){
         if(event.target.value === '-1'){
             date_picker_y.classList.add(['is-hidden'])
             date_picker_o.classList.add(['is-hidden'])
-            current_date_y = 0
+            current_date_y = now
             current_date_o = 0
         }
         if(event.target.value === '0'){
