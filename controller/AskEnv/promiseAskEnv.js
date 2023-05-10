@@ -8,7 +8,7 @@ const { buildWindow } = require(`${global.root}/windows.js`);
 /**
  * Asks the user to fill out env information
  *
- * @return {*} 
+ * @return {Promise} 
  */
 function askForEnv(){
   return new Promise((resolve, reject) => {
@@ -28,7 +28,7 @@ function encryptAppSecret(secret){
 /**
  * Returns a Promise of app id and app secret, taken from user input or read from file
  *
- * @return {*} 
+ * @return {Promise} 
  */
 function getEnv(){
   console.log(global.root);

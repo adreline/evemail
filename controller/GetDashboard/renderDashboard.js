@@ -12,7 +12,12 @@ const three_months = 7884000000
 
 let current_date_y = 0
 let current_date_o = 0
-
+/**
+ * Selects all characters with checked checkboxes
+ * and returns it as an array to the main process
+ *
+ * @return {Array} 
+ */
 function getSelectedMembers(){
     let boxes = document.getElementsByName('selected-members')
     return Array.from(boxes).filter( elem => elem.checked ).map( elem => {
@@ -20,7 +25,12 @@ function getSelectedMembers(){
         return { name: tmp[0], id: tmp[1] }
     })
 }
-
+/**
+ * Applies given state to all checkboxes
+ * apart from 'select all' box
+ *
+ * @param {boolean} state
+ */
 function selectAll(state){
  let boxes = document.getElementsByName('selected-members')
  boxes.forEach(box => {
@@ -28,7 +38,10 @@ function selectAll(state){
  })
  enableButton()
 }
-
+/**
+ * Send button will only appear if at least one recipient is selected
+ *
+ */
 function enableButton(){
     let boxes = document.getElementsByName('selected-members')
     let send = document.getElementById('send-mail-button')
@@ -41,7 +54,11 @@ function enableButton(){
         send.classList.remove('is-hidden')
     }
 }
-
+/**
+ * Steers the filtering system
+ * 
+ * @todo so far it is very convolted and could use a rewrite
+ */
 function handleFilters(){
     filter_mode.addEventListener('change', event => {
         let now = Date.now()
@@ -78,7 +95,14 @@ function handleFilters(){
     })
 
 }
-
+/**
+ * Filters the members array
+ *
+ * @param {Array} members
+ * @param {number} time_oldest
+ * @param {number} time_youngest
+ * @return {Array} 
+ */
 function applyFilter(members, time_oldest, time_youngest){
     return members.filter(member => {
         let last_online = Date.parse(member.logonDate)
@@ -86,7 +110,11 @@ function applyFilter(members, time_oldest, time_youngest){
         return (last_online > time_oldest && last_online < time_youngest)
     })
 }
-
+/**
+ * Writes the content of the members array on the ui
+ *
+ * @param {Array} members
+ */
 function populateTable(members){
     table.classList.add('is-hidden')
 
@@ -108,13 +136,19 @@ function populateTable(members){
     table.classList.remove('is-hidden')
 
 }
-
+/**
+ * Each checkbox lisstens to click events
+ *
+ */
 function attachListeners(){
     document.getElementsByName('selected-members').forEach( elem => { 
         elem.addEventListener('change', event => { enableButton() }) 
     })
 }
-
+/**
+ * Deletes all ui table content
+ *
+ */
 function clearTable(){
     document.getElementById('member-table-body').replaceChildren()
 }
@@ -139,6 +173,7 @@ dashboard.getCharacter()
     })
     handleFilters()
     btn_filter.addEventListener('click', event => {
+        // this applies the filtering logic
         let filtered_members = applyFilter(members, current_date_o, current_date_y)
         clearTable()
         populateTable(filtered_members)

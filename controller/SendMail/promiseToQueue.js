@@ -2,7 +2,11 @@ const { ipcMain } = require('electron');
 const { buildWindow } = require(`${global.root}/windows.js`);
 const { promiseTemplate } = require(`${global.root}/controller/Templates/crudTemplates.js`);
 const { sendEvemails } = require(`${global.root}/controller/SendMail/promiseToSend.js`);
-
+/**
+ * Asks user to select a template to use in this task
+ *
+ * @return {Promise} 
+ */
 function askForTemplate(){
     console.log('[promiseToQueue.js] select template to send');
     return new Promise((resolve, reject) => {
@@ -15,7 +19,12 @@ function askForTemplate(){
         askForTemplate.loadFile(`${global.root}/views/windows/_selectTemplate.html`)
     })
 }
-
+/**
+ * Asks the user to confirm their template choice while rendering the preview of the template
+ *
+ * @param {Object} template
+ * @return {Promise} 
+ */
 function askForConfirmation(template){
     console.log('[promiseToQueue.js] asking for template choice confirmation');
     return new Promise((resolve, reject) => {
@@ -32,7 +41,11 @@ function askForConfirmation(template){
         })
     })
 }
-
+/**
+ * Opens the task progress tracking window and forwards the async queue events to it
+ *
+ * @param {EventEmitter} task
+ */
 function trackTask(task){
     console.log('[promiseToQueue.js] opening task tracking');
     let taskProgress = buildWindow('taskProgress')
@@ -63,10 +76,16 @@ function trackTask(task){
             console.log('[promiseToQueue.js] task began');
             taskProgress.webContents.send('task:begin')
         })
-        task.emit('mailer:ready')
+        task.emit('mailer:ready') // this signals the queue that the ui is ready and the task can start
     })
 }
-
+/**
+ * Initiates a new bulk mail task
+ * 
+ * takes care of all necessary steps
+ * @param {Array} recipients
+ * @return {Promise} 
+ */
 function startTask(recipients){
     return new Promise((resolve, reject) => {
         askForTemplate()

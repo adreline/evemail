@@ -2,9 +2,9 @@ const sso = require(`${global.root}/esi/eve-esi/src/sso.js`);
 /**
  * Promises to receive a sso token. Uses ESI login page.
  *
- * @param {*} session
- * @param {*} env
- * @return {*} 
+ * @param {import("electron").Session} session
+ * @param {Object} env
+ * @return {Promise} 
  */
 function loadSSOToken(session, env){
     return new Promise((resolve, reject) => {

@@ -7,8 +7,8 @@ const { getSSO } = require(`${global.root}/sso.js`);
 /**
  * Promises the corporation id of the given character
  *
- * @param {*} characterId
- * @return {*} 
+ * @param {number} characterId
+ * @return {Promise} 
  */
 function promiseCorpId(characterId){
     return new Promise((resolve, reject) =>{
@@ -26,9 +26,9 @@ function promiseCorpId(characterId){
  * Promises to lookup and add a character name to raw_member.
  * 
  * The Member tracking ESI route does not return character names, only ids and activity info 
- *
- * @param {*} raw_member
- * @return {*} 
+ * thus making it neccessary to perform another api call
+ * @param {Object} raw_member
+ * @return {Promise} 
  */
 function promiseCharacterName(raw_member){
     return new Promise((resolve, reject) =>{
@@ -46,9 +46,9 @@ function promiseCharacterName(raw_member){
 /**
  * Promises to return corp members with information on their activity
  *
- * @param {*} corp_id
- * @param {*} sso
- * @return {*} 
+ * @param {number} corp_id
+ * @param {Object} sso
+ * @return {Promise} 
  */
 function promiseRawCorpMembers(corp_id, sso){
     return new Promise((resolve, reject) => {
@@ -66,7 +66,7 @@ function promiseRawCorpMembers(corp_id, sso){
 /**
  * Promises to return a complete list of members for dashboard view to display
  *
- * @return {*} 
+ * @return {Array} 
  */
 function getCorpMembers(){
     return new Promise((resolve, reject) => {

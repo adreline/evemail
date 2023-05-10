@@ -6,8 +6,8 @@ const meta = new esi.MetaApi()
  * Promises information on the character, that belongs under given sso token,
  * including character id and name
  *
- * @param {*} token
- * @return {*} 
+ * @param {string} token
+ * @return {Promise} 
  */
 function getCharacter(token){
     return new Promise((resolve, reject) => {
@@ -26,8 +26,8 @@ function getCharacter(token){
  * Promises to download a character profile picture.
  * Resolve will contain the filename
  *
- * @param {*} id
- * @return {*} 
+ * @param {number} id
+ * @return {Promise} 
  */
 function getCharacterPicture(id){
     return new Promise((resolve, reject) => {
