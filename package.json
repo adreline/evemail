@@ -1,5 +1,5 @@
 {
-  "name": "evemail",
+  "name": "quickdraft",
   "version": "0.8.1",
   "description": "Corporation management tool, for the game eve online, that allows for batch sending of templated evemails, based on criteria.",
   "main": "index.js",
@@ -10,7 +10,7 @@
     "make": "electron-forge make"
   },
   "author": "adreline",
-  "license": "ISC",
+  "license": "GPL",
   "devDependencies": {
     "@electron-forge/cli": "^6.1.1",
     "@electron-forge/maker-deb": "^6.1.1",

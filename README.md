@@ -1,10 +1,10 @@
-# Evemail
+# Quickdraft
 > Bulk evemails made easy.
 
-![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/adreline/evemail?include_prereleases)
-![GitHub repo size](https://img.shields.io/github/repo-size/adreline/evemail)
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/adreline/quickdraft?include_prereleases)
+![GitHub repo size](https://img.shields.io/github/repo-size/adreline/quickdraft)
 
-Evemail is a desktop native app that can send templated evemails in bulk.
+Quickdraft simplifies the process of mail communication for the video game EVE Online by providing customizable template options and corporation members listings within a clean interface designed specifically with corporation managers in mind.
 
 ## Installation
 
@@ -14,24 +14,20 @@ Coming soon
 
 Windows:
 
-Grab an installer or portable version from the [releases](https://github.com/adreline/evemail/releases) list
-
-## Usage example
-
-This app is aimed at eve online corporation managers and seeks to make it easier to send multiple mails to the corporation members, through the use of templates.
+Grab an installer or portable version from the [releases](https://github.com/adreline/quickdraft/releases) list
 
 ## Development setup
 
-The app is self-contained, first pull the repo
+First, pull the repo
 
 ```sh
-git clone https://github.com/adreline/evemail.git
+git clone https://github.com/adreline/quickdraft.git
 ```
 
 install dependencies
 
 ```sh
-cd evemail
+cd quickdraft
 npm i --dev
 ```
 
@@ -63,13 +59,13 @@ npm run make
 
 ## Meta
 
-Distributed under the XYZ license. See ``LICENSE`` for more information.
+Distributed under the GNU General Public License (GPL). See ``LICENSE`` for more information.
 
-[https://github.com/yourname/github-link](https://github.com/dbader/)
+[https://github.com/adreline/quickdraft](https://github.com/adreline/quickdraft)
 
 ## Contributing
 
-1. Fork it (<https://github.com/adreline/evemail/fork>)
+1. Fork it (<https://github.com/adreline/quickdraft/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
