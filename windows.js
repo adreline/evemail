@@ -1,6 +1,6 @@
 const { BrowserWindow } = require("electron");
 const path = require('path');
-const app_name = 'Evemailer'
+const app_name = 'Quickdraft'
 let repository = {}
 
 const windows = {
