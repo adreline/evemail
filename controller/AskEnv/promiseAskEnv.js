@@ -1,5 +1,6 @@
 const { ipcMain, BrowserWindow } = require('electron')
 const path = require('path')
+const child_process = require('child_process')
 const { promises: Fs } = require('fs');
 const { createHash } = require('crypto');
 const { buildWindow } = require(`${global.root}/windows.js`);
@@ -17,6 +18,7 @@ function askForEnv(){
         resolve(data) 
         askEnv.close()
       })
+      ipcMain.handle('showEnvHelp', () => { child_process.execSync('start "" "https://github.com/adreline/quickdraft/wiki/Authentication-&-API-Access"') })
       askEnv.loadFile(`${global.root}/views/windows/_askEnv.html`)
   })
 }
