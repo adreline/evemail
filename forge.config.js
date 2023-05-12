@@ -4,7 +4,8 @@ module.exports = {
       "token.json",
       "env.json",
       "templates/db.json"
-    ]
+    ],
+    icon: 'resources/ic_launcher-web'
   },
   rebuildConfig: {},
   makers: [
