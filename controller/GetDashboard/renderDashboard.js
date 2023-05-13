@@ -1,3 +1,4 @@
+var DateTime = luxon.DateTime;
 const pic = document.getElementById('character-picture')
 const characterName = document.getElementById('character-name')
 const filter_mode = document.getElementById('filter-mode')
@@ -7,11 +8,10 @@ const date_picker_o = document.getElementById('date-picker-oldest')
 const table = document.getElementById('member-table')
 const table_body = document.getElementById('member-table-body')
 const select_all_box = document.getElementById('select-all')
-const six_months = 15770000000
-const three_months = 7884000000
+const datetime_format = 'dd.MM.yyyy, hh:mm:ss';
 
-let current_date_y = 0
-let current_date_o = 0
+let current_date_y = DateTime.now()
+let current_date_o = DateTime.fromMillis(0)
 /**
  * Selects all characters with checked checkboxes
  * and returns it as an array to the main process
@@ -61,37 +61,36 @@ function enableButton(){
  */
 function handleFilters(){
     filter_mode.addEventListener('change', event => {
-        let now = Date.now()
+        let now = DateTime.now()
         if(event.target.value === '-1'){
             date_picker_y.classList.add(['is-hidden'])
             date_picker_o.classList.add(['is-hidden'])
             current_date_y = now
-            current_date_o = 0
+            current_date_o = DateTime.fromMillis(0)
         }
         if(event.target.value === '0'){
             date_picker_y.classList.remove(['is-hidden'])
             date_picker_o.classList.add(['is-hidden'])
-            current_date_y = 0
-            current_date_o = 0
+            current_date_y = DateTime.fromMillis(0)
+            current_date_o = DateTime.fromMillis(0)
             date_picker_y.value = ''
         }
         if(event.target.value === '1'){
             date_picker_y.classList.add(['is-hidden'])
             date_picker_o.classList.add(['is-hidden'])
-            current_date_y = now - three_months
-            current_date_o = now - six_months
+            current_date_y = now.minus({months: 3})
+            current_date_o = now.minus({months: 6})
         }
         if(event.target.value === '2'){
             date_picker_y.classList.add(['is-hidden'])
             date_picker_o.classList.add(['is-hidden'])
-            current_date_y = now - six_months
-            current_date_o = 0
+            current_date_y = now.minus({months: 6})
+            current_date_o = DateTime.fromMillis(0)
         }
 
     })
     date_picker_y.addEventListener('change', event => {
-        current_date_y = Date.parse(event.target.value)
-        console.log(current_date_y);
+        current_date_y = DateTime.fromISO(event.target.value)
     })
 
 }
@@ -105,7 +104,8 @@ function handleFilters(){
  */
 function applyFilter(members, time_oldest, time_youngest){
     return members.filter(member => {
-        let last_online = Date.parse(member.logonDate)
+        console.log(`member logon date ${member.logonDate}`);
+        let last_online = DateTime.fromFormat(member.logonDate, datetime_format)
         console.log(`${last_online} > ${time_oldest} && ${last_online} < ${time_youngest}`);
         return (last_online > time_oldest && last_online < time_youngest)
     })
