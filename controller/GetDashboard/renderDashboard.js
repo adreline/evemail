@@ -8,7 +8,6 @@ const date_picker_o = document.getElementById('date-picker-oldest')
 const table = document.getElementById('member-table')
 const table_body = document.getElementById('member-table-body')
 const select_all_box = document.getElementById('select-all')
-const datetime_format = 'dd.MM.yyyy, hh:mm:ss';
 
 let current_date_y = DateTime.now()
 let current_date_o = DateTime.fromMillis(0)
@@ -104,8 +103,7 @@ function handleFilters(){
  */
 function applyFilter(members, time_oldest, time_youngest){
     return members.filter(member => {
-        console.log(`member logon date ${member.logonDate}`);
-        let last_online = DateTime.fromFormat(member.logonDate, datetime_format)
+        let last_online = DateTime.fromJSDate(member.logonDate)
         console.log(`${last_online} > ${time_oldest} && ${last_online} < ${time_youngest}`);
         return (last_online > time_oldest && last_online < time_youngest)
     })
@@ -118,7 +116,8 @@ function applyFilter(members, time_oldest, time_youngest){
 function populateTable(members){
     table.classList.add('is-hidden')
 
-    members = localiseDates([ "logonDate", "startDate" ], members)
+        let l_members = clone(members)
+        l_members = localiseDates([ "logonDate", "startDate" ], l_members)
 
     let prototype = [
         { tag: "input", type: "checkbox" },
@@ -127,10 +126,10 @@ function populateTable(members){
         { key: "logonDate", tag: "td" },
         { key: "startDate", tag: "td" },
     ]
-    for(i in members){
+    for(i in l_members){
         prototype[0].name = "selected-members"
-        prototype[0].value = `${members[i].characterName}:${members[i].characterId}`
-        table_body.appendChild(constructTableRow(members[i],prototype))
+        prototype[0].value = `${l_members[i].characterName}:${l_members[i].characterId}`
+        table_body.appendChild(constructTableRow(l_members[i],prototype))
     }
 
     table.classList.remove('is-hidden')
@@ -160,6 +159,7 @@ dashboard.getCharacter()
     return dashboard.getCorpMembers()
 })
 .then( members => {
+    console.log(typeof members[0].logoffDate);
     populateTable(members)
     attachListeners()
     select_all_box.addEventListener('change', event => { 
