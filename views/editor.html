@@ -11,9 +11,26 @@
 <body class="p-4">
   <div class="container">
     <div class="box">
-      <button id="save" class="button is-primary">Save</button>
-      <input id="title" type="text" placeholder="mail subject"> 
-      <textarea id="body" class="textarea" placeholder="mail body" rows="10"></textarea>
+
+      <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+          <input id="title" class="input" type="text" placeholder="mail subject"> 
+        </div>
+      </div>
+      
+      <div class="field">
+        <label class="label">Email</label>
+        <div class="control">
+          <textarea id="body" class="textarea" placeholder="mail body" rows="10"></textarea>
+        </div>
+      </div>
+
+      <div class="control">
+        <button id="save" class="button is-primary">Save</button>
+      </div>
+
+    </div>
     </div>
 </div>
 </body>
