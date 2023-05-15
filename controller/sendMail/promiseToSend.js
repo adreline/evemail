@@ -3,6 +3,7 @@ const EventEmitter = require('events');
 const { PostCharactersCharacterIdMailMail: Evemail } = require(`${global.root}/esi/eve-esi`)
 const { getSSO } = require(`${global.root}/sso.js`);
 const { queue } = require('async')
+const { renderTemplate } = require(`${global.root}/renderer.js`);
 
 const evemailer = new esi.MailApi()
 /**
@@ -50,9 +51,16 @@ function send(mail){
  * @param {Array} to
  * @return {Evemail} 
  */
-function constructMail(template, to){
-    let body = template.body
-    let subject = template.subject
+function constructMail(template, target){
+    let context = renderTemplate({
+        template: global.clone(template),
+        circumstances: [
+            [target]
+        ]
+    })
+    let body = context.template.body
+    let subject = context.template.subject
+    let to = [{ recipient_id: target.characterId, recipient_type: "character" }]
     return new Evemail(body, to, subject)
 }
 /**
@@ -72,12 +80,12 @@ function sendEvemails(targets, template){
         let current = 0
 
         let q = queue((target, callback) => {
-            console.log(`[promiseToSend.js] sending to ${target.name}`);
-            send( constructMail(template, [{ recipient_id: target.id, recipient_type: "character" }]) )
+            console.log(`[promiseToSend.js] sending to ${target.characterName}`);
+            send( constructMail(template, target) )
             .then(() => {
-                console.log(`[promiseToSend.js] success sending to ${target.name}`);
+                console.log(`[promiseToSend.js] success sending to ${target.characterName}`);
                 current++
-                task.emit('mailer:progress', {current: current, total: total, recipient: target.name})
+                task.emit('mailer:progress', {current: current, total: total, recipient: target.characterName})
                 callback()
             })
             .catch( e => {
@@ -90,8 +98,8 @@ function sendEvemails(targets, template){
         }, 5);
 
         q.error(function(err, target) {
-            console.log(`[promiseToSend.js] failed sending to ${target.name}, ${err.error}`);
-            task.emit('mailer:error', {recipient: target.name, error: err.error})
+            console.log(`[promiseToSend.js] failed sending to ${target.characterName}, ${err.error}`);
+            task.emit('mailer:error', {recipient: target.characterName, error: err.error})
             if(!q.paused){
                 console.log(`[promiseToSend.js] pausing queue for ${err.details.remainingTime}`);
                 task.emit('mailer:pause', { time: Math.round(err.details.remainingTime * Math.pow(10, -7)) })
