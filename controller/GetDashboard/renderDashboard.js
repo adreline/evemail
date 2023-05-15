@@ -19,10 +19,7 @@ let current_date_o = DateTime.fromMillis(0)
  */
 function getSelectedMembers(){
     let boxes = document.getElementsByName('selected-members')
-    return Array.from(boxes).filter( elem => elem.checked ).map( elem => {
-        let tmp = elem.value.split(':')
-        return { name: tmp[0], id: tmp[1] }
-    })
+    return Array.from(boxes).filter( elem => elem.checked ).map( elem => elem.value)
 }
 /**
  * Applies given state to all checkboxes
@@ -128,7 +125,7 @@ function populateTable(members){
     ]
     for(i in l_members){
         prototype[0].name = "selected-members"
-        prototype[0].value = `${l_members[i].characterName}:${l_members[i].characterId}`
+        prototype[0].value = `${l_members[i].characterId}`
         table_body.appendChild(constructTableRow(l_members[i],prototype))
     }
 
@@ -166,7 +163,9 @@ dashboard.getCharacter()
         selectAll(event.currentTarget.checked) 
     }) 
     document.getElementById('send-mail-button').addEventListener('click', event => { 
-        window.dashboard.putSelectedMembers(getSelectedMembers()) 
+        let selected = getSelectedMembers()
+        let hydrated = selected.map(id => members.find( member => member.characterId == id ))
+        window.dashboard.putSelectedMembers(hydrated) 
     })
     document.getElementById('open-templates-list').addEventListener('click', event => {
         window.dashboard.openTemplatesList()
