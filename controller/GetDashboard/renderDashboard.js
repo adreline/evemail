@@ -159,7 +159,7 @@ dashboard.getCharacter()
     return dashboard.getCorpMembers()
 })
 .then( members => {
-    console.log(typeof members[0].logoffDate);
+    console.log(members);
     populateTable(members)
     attachListeners()
     select_all_box.addEventListener('change', event => { 
