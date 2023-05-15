@@ -39,8 +39,9 @@ function askForConfirmation(template, recipients){
         askForConfirmation.loadFile(`${global.root}/views/windows/_mailPreview.html`)
         .then(()=>{
             console.log('[promiseToQueue.js] sending template for preview');
+
             let context = renderTemplate({
-                template: template,
+                template: global.clone(template),
                 circumstances: [
                     recipients
                 ]
