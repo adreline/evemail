@@ -2,6 +2,7 @@ const { ipcMain } = require('electron');
 const { buildWindow } = require(`${global.root}/windows.js`);
 const { promiseTemplate } = require(`${global.root}/controller/Templates/crudTemplates.js`);
 const { sendEvemails } = require(`${global.root}/controller/SendMail/promiseToSend.js`);
+const { renderTemplate } = require(`${global.root}/renderer.js`);
 /**
  * Asks user to select a template to use in this task
  *
@@ -23,9 +24,10 @@ function askForTemplate(){
  * Asks the user to confirm their template choice while rendering the preview of the template
  *
  * @param {Object} template
+ * @param {Object} recipients
  * @return {Promise} 
  */
-function askForConfirmation(template){
+function askForConfirmation(template, recipients){
     console.log('[promiseToQueue.js] asking for template choice confirmation');
     return new Promise((resolve, reject) => {
         let askForConfirmation = buildWindow('askForConfirmation', 'dashboard')
@@ -37,7 +39,13 @@ function askForConfirmation(template){
         askForConfirmation.loadFile(`${global.root}/views/windows/_mailPreview.html`)
         .then(()=>{
             console.log('[promiseToQueue.js] sending template for preview');
-            askForConfirmation.webContents.send('queue:templateToPreview', template)
+            let context = renderTemplate({
+                template: template,
+                circumstances: [
+                    recipients
+                ]
+            })
+            askForConfirmation.webContents.send('queue:templateToPreview', context.template)
         })
     })
 }
@@ -93,7 +101,7 @@ function startTask(recipients){
             return promiseTemplate(template_id)
         })
         .then( template => {
-            askForConfirmation(template)
+            askForConfirmation(template, recipients)
             .then(() => {
                 return sendEvemails(recipients, {
                     subject: template.subject,
