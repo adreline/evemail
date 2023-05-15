@@ -16,6 +16,7 @@ const { getEnv } = require(`${global.root}/controller/AskEnv/promiseAskEnv.js`);
 const TemplatesList = require(`${global.root}/controller/Templates/List/promiseTemplatesList.js`);
 const TemplatesEditor = require(`${global.root}/controller/Templates/Editor/promiseTemplatesEditor.js`);
 const { getSSO } = require(`${global.root}/sso.js`);
+const Utils = require(`${global.root}/utils.js`);
 const { getCharacter, getCharacterPicture } = require(`${global.root}/controller/GetDashboard/promiseProfile.js`);
 const { promiseCorpMembers } = require(`${global.root}/controller/GetDashboard/promiseCorpMembers.js`);
 const { startTask: sendEvemails } = require(`${global.root}/controller/SendMail/promiseToQueue.js`);
