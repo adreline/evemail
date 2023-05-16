@@ -39,13 +39,14 @@ function askForConfirmation(template, recipients){
         askForConfirmation.loadFile(`${global.root}/views/windows/_mailPreview.html`)
         .then(()=>{
             console.log('[promiseToQueue.js] sending template for preview');
-
-            let context = renderTemplate({
+            let sender = global.sso.character
+            let pool = global.clone(recipients)
+            pool.push({ senderName: sender.name })
+            let context = {
                 template: global.clone(template),
-                circumstances: [
-                    recipients
-                ]
-            })
+                circumstances: [ pool ]
+            }
+            context = renderTemplate(context)
             askForConfirmation.webContents.send('queue:templateToPreview', context.template)
         })
     })

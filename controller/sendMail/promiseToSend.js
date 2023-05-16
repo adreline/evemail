@@ -52,12 +52,14 @@ function send(mail){
  * @return {Evemail} 
  */
 function constructMail(template, target){
-    let context = renderTemplate({
+    let sender = global.sso.character
+    let pool = [global.clone(target)]
+    pool.push({ senderName: sender.name })
+    let context = {
         template: global.clone(template),
-        circumstances: [
-            [target]
-        ]
-    })
+        circumstances: [ pool ]
+    }
+    context = renderTemplate(context)
     let body = context.template.body
     let subject = context.template.subject
     let to = [{ recipient_id: target.characterId, recipient_type: "character" }]
