@@ -19,8 +19,6 @@ const { getSSO } = require(`${global.root}/sso.js`);
 const { getCharacter, getCharacterPicture } = require(`${global.root}/controller/GetDashboard/promiseProfile.js`);
 const { promiseCorpMembers } = require(`${global.root}/controller/GetDashboard/promiseCorpMembers.js`);
 const { startTask: sendEvemails } = require(`${global.root}/controller/SendMail/promiseToQueue.js`);
-let sso = {}
-let env = {}
 
 
 /**
@@ -33,24 +31,24 @@ function init(){
   return new Promise((resolve, reject) => {
     getEnv()
     .then( settings => {
-      env = settings
+      global.env = settings
       return getSSO()
     })
     .then( token => {
-      sso = token
-      if(!sso.hasOwnProperty('character')){
+      global.sso = token
+      if(!global.sso.hasOwnProperty('character')){
         console.log('[index.js] character data not found, pulling');
-        getCharacter(sso.access_token)
+        getCharacter(global.sso.access_token)
         .then(character => {
-          sso.character = {
+          global.sso.character = {
             id: character.characterID,
             name: character.characterName
           }
-          return getCharacterPicture(sso.character.id)
+          return getCharacterPicture(global.sso.character.id)
         })
         .then(filename => {
-          sso.character.picture = filename
-          Fs.writeFile(`${global.root}/token.json`, JSON.stringify(sso))
+          global.sso.character.picture = filename
+          Fs.writeFile(`${global.root}/token.json`, JSON.stringify(global.sso))
           console.log('[index.js] pull complete');
           resolve()
         })
@@ -66,7 +64,7 @@ app.whenReady().then(() => {
   init()
   .then(()=>{
     console.log('[index.js] init finished');
-    ipcMain.handle('getCharacter', () => { return sso.character })
+    ipcMain.handle('getCharacter', () => { return global.sso.character })
     ipcMain.handle('getCorpMembers', () => { return promiseCorpMembers() })
     ipcMain.on('selectedMembers', (event, members) => sendEvemails(members))
     return dashboard.loadFile(`${global.root}/views/index.html`);
