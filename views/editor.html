@@ -15,10 +15,10 @@
       <div class="field">
         <label class="label">Name</label>
         <div class="control">
-          <input id="title" class="input" type="text" placeholder="mail subject"> 
+          <input id="title" class="input" type="text" placeholder="mail subject">
         </div>
       </div>
-      
+
       <div class="field">
         <label class="label">Email</label>
         <div class="control">
@@ -33,47 +33,130 @@
     </div>
     <div class="box">
       <h3 class="subtitle">Variable reference</h3>
-      <div class="tile is-ancestor">
-        <div class="tile">
-          <div class="card">
-            <header class="card-header">
-              <p class="card-header-title">
-                Recipient character name
-              </p>
-            </header>
-            <div class="card-content">
-              <div class="content">
-                Full name of the character receiving the evemail.
-                <br>
-                <small><b>Example:</b> Tiuh Shihari</small>
-                <br>
-                <small><b>Usage:</b> {{characterName}}</small>  
+      <div class="tile is-ancestor is-vertical">
+        <div class="tile is-parent">
+          <div class="tile is-child">
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title">
+                  Recipient character name
+                </p>
+              </header>
+              <div class="card-content">
+                <div class="content">
+                  Full name of the character receiving the evemail.
+                  <br>
+                  <small><b>Example:</b> Tiuh Shihari</small>
+                  <br>
+                  <small><b>Usage:</b> {{characterName}}</small>
+                </div>
               </div>
             </div>
           </div>
-            </div>
-        <div class="tile">
-          <div class="card">
-            <header class="card-header">
-              <p class="card-header-title">
-                Template
-              </p>
-            </header>
-            <div class="card-content">
-              <div class="content">
-                You can include a another template within the current template. The inclusion is recursive.
-                <br>
-                <small><b>Example:</b> - </small>
-                <br>
-                <small><b>Usage:</b> {% my footer template %}</small>  
+          <div class="tile is-child">
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title">
+                  Template
+                </p>
+              </header>
+              <div class="card-content">
+                <div class="content">
+                  You can include a another template within the current template. The inclusion is recursive.
+                  <br>
+                  <small><b>Example:</b> - </small>
+                  <br>
+                  <small><b>Usage:</b> {% my footer template %}</small>
+                </div>
               </div>
             </div>
           </div>
+  
+        </div>
+        <div class="tile is-parent">
+          <div class="tile is-child">
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title">
+                  Last time logged off
+                </p>
+              </header>
+              <div class="card-content">
+                <div class="content">
+                  Full timestamp of the recipient character last log off
+                  <br>
+                  <small><b>Example:</b> 2023-05-15T20:48:09.000Z</small>
+                  <br>
+                  <small><b>Usage:</b> {{logoffDate}}</small>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="tile is-child">
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title">
+                  Last time logged in
+                </p>
+              </header>
+              <div class="card-content">
+                <div class="content">
+                  Full timestamp of the recipient character last log in
+                  <br>
+                  <small><b>Example:</b> 2023-05-15T20:25:29.000Z</small>
+                  <br>
+                  <small><b>Usage:</b> {{logonDate}}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+        <div class="tile is-parent">
+          <div class="tile is-child">
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title">
+                  Recipient character name
+                </p>
+              </header>
+              <div class="card-content">
+                <div class="content">
+                  Timestamp of the recipient character creation (a character birthday)
+                  <br>
+                  <small><b>Example:</b> 2022-10-27T11:33:00.000Z</small>
+                  <br>
+                  <small><b>Usage:</b> {{startDate}}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tile is-child">
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title">
+                  Sender character name
+                </p>
+              </header>
+              <div class="card-content">
+                <div class="content">
+                  The character name that is currently logged in in Quickdraft
+                  <br>
+                  <small><b>Example:</b> Rosa Leaf</small>
+                  <br>
+                  <small><b>Usage:</b> {{senderName}}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+
       </div>
     </div>
-</div>
+  </div>
 
 </body>
 <script src="../controller/Templates/Editor/renderTemplatesEditor.js"></script>
+
 </html>
