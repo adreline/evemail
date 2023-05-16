@@ -6,17 +6,34 @@ function extractTag(raw){
     return raw.replaceAll("{{","").replaceAll("}}","").replaceAll("%","").trim()
 }
 
-function fetch(pool, needle){
-    let findling;
-    for (const [key, value] of Object.entries(pool)){
-        return findling = value.hasOwnProperty(needle) ? value[needle] : fetch(pool[key], needle);
+function fetch(pool, needle) {
+
+    // Base case
+    if (pool.hasOwnProperty(needle)) {
+      return pool[needle];
+    } else {
+      var keys = Object.keys(pool); // add this line to iterate over the keys
+  
+      for (var i = 0, len = keys.length; i < len; i++) {
+        var k = keys[i]; // use this key for iteration, instead of index "i"
+  
+        // add "obj[k] &&" to ignore null values
+        if (pool[k] && typeof pool[k] == 'object') {
+          var found = fetch(pool[k], needle);
+          if (found) {
+            // If the object was found in the recursive call, bubble it up.
+            return found;
+          }
+        }
+      }
     }
-    return findling;
-}
+  }
+  
 
 function renderTemplate(context){
     let body = context.template.body
     console.log(`[renderer.js] invoked renderTemplate`);
+    console.log(context.circumstances);
     let pool = Object.assign({}, ...context.circumstances)
     let raw_tokens = [...body.matchAll(pattern_v)]
     let tokens = new Map()
