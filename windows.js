@@ -5,8 +5,8 @@ let repository = {}
 
 const windows = {
     dashboard: { 
-        width: 800,
-        height: 600,
+        width: 1000,
+        height: 800,
         title: `${app_name}`,
         webPreferences: {
           preload: path.join(__dirname, `/controller/GetDashboard/preloadDashboard.js`)
@@ -14,8 +14,8 @@ const windows = {
       },
       templatesList: {
         modal: true,
-        width: 800,
-        height: 600,
+        width: 900,
+        height: 500,
         title: `${app_name} - List of mail templates`,
         webPreferences: {
             preload: path.join(__dirname, `/controller/Templates/List/preloadTemplatesList.js`)
@@ -23,8 +23,8 @@ const windows = {
       },
       templatesEditor: {
         modal: true,
-        width: 800,
-        height: 600,
+        width: 900,
+        height: 800,
         title: `${app_name} - Create a new template`,
         webPreferences: {
             preload: path.join(__dirname, `/controller/Templates/Editor/preloadTemplatesEditor.js`)
