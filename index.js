@@ -34,8 +34,7 @@ function init(){
       global.env = settings
       return getSSO()
     })
-    .then( token => {
-      global.sso = token
+    .then( () => {
       if(!global.sso.hasOwnProperty('character')){
         console.log('[index.js] character data not found, pulling');
         getCharacter(global.sso.access_token)
@@ -60,13 +59,13 @@ function init(){
 }
 
 app.whenReady().then(() => {
-  let dashboard = buildWindow('dashboard');
   init()
   .then(()=>{
     console.log('[index.js] init finished');
     ipcMain.handle('getCharacter', () => { return global.sso.character })
     ipcMain.handle('getCorpMembers', () => { return promiseCorpMembers() })
     ipcMain.on('selectedMembers', (event, members) => sendEvemails(members))
+    let dashboard = buildWindow('dashboard');
     return dashboard.loadFile(`${global.root}/views/index.html`);
   })
   

@@ -47,12 +47,11 @@ function promiseCharacterName(raw_member){
  * Promises to return corp members with information on their activity
  *
  * @param {number} corp_id
- * @param {Object} sso
  * @return {Promise} 
  */
-function promiseRawCorpMembers(corp_id, sso){
+function promiseRawCorpMembers(corp_id){
     return new Promise((resolve, reject) => {
-        corpApi.getCorporationsCorporationIdMembertracking(corp_id, { token: sso.access_token }, (error, data, response) => {
+        corpApi.getCorporationsCorporationIdMembertracking(corp_id, { token: global.sso.access_token }, (error, data, response) => {
             if (error) {
                 let e = JSON.parse(error.response.res.text)
                 reject(e.error)
@@ -66,16 +65,16 @@ function promiseRawCorpMembers(corp_id, sso){
 /**
  * Promises to return a complete list of members for dashboard view to display
  *
- * @return {Array} 
+ * @return {Promise} 
  */
 function getCorpMembers(){
     return new Promise((resolve, reject) => {
         getSSO()
-        .then( sso => {
-            return promiseCorpId(sso.character.id)
+        .then(() => {
+            return promiseCorpId(global.sso.character.id)
         })
         .then( corp_id => {
-            return promiseRawCorpMembers(corp_id, sso)
+            return promiseRawCorpMembers(corp_id, global.sso)
         })
         .then( raw_members => {
             let members = []

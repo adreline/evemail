@@ -31,8 +31,8 @@ function substringbetween(haystack, a, b, offset_a = 0, offset_b = 0){
 function send(mail){
     return new Promise((resolve, reject) => {
         getSSO()
-        .then((sso) => {
-            evemailer.postCharactersCharacterIdMail(sso.character.id, mail, { 'datasource': "tranquility", 'token': sso.access_token }, (error, data, response) => {
+        .then(() => {
+            evemailer.postCharactersCharacterIdMail(global.sso.character.id, mail, { 'datasource': "tranquility", 'token': global.sso.access_token }, (error, data, response) => {
                 if (error) {
                     reject(error);
                 } else {
