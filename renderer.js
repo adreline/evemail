@@ -1,3 +1,5 @@
+const { promiseTemplates, promiseTemplate } = require(`${global.root}/controller/Templates/crudTemplates.js`)
+
 const pattern = /(\{\{\s?\w+\s?\}\})|(\{\%\s?[\w\s]+\s?\%\})/gm;
 const pattern_v = /(\{\{\s?\w+\s?\}\})/gm;
 const pattern_t = /(\{\%\s?[\w\s]+\s?\%\})/gm;
@@ -29,30 +31,67 @@ function fetch(pool, needle) {
     }
   }
   
+  function fetchVal(pool, needle){
+    Array.from(pool).forEach(template => {
+      if(template.subject == needle){
+        return template
+      }
+    })
+    return undefined
+  }
 
 function renderTemplate(context){
-    let body = context.template.body
+
+  let body = context.template.body
     console.log(`[renderer.js] invoked renderTemplate`);
-    console.log(context.circumstances);
-    let pool = Object.assign({}, ...context.circumstances)
-    let raw_tokens = [...body.matchAll(pattern_v)]
-    let tokens = new Map()
-
-    raw_tokens.forEach(token => {
-        tokens.set(token[0], extractTag(token[0]))
-    });
-
-    for (const [raw_token, token] of tokens) {
-        let val = fetch(pool, token)
-        if(val !== undefined){
-            console.log(`[renderer.js] ${token} = ${val}`);
-            body = body.replaceAll(raw_token, val)
-        }else{
+    // Replacing variables
+    if(pattern_v.test(body)){
+      let pool = Object.assign({}, ...context.circumstances)
+      body = swapTokens(body, pattern_v, (raw_token, token, body)=>{
+          let val = fetch(pool, token);
+          if (val !== undefined) {
+            console.log(`[renderer.js] ${raw_token}/${token} = ${val}`);
+            body = body.replaceAll(raw_token, val);
+          } else {
             console.log(`[renderer.js] pool is missing a property ${token}`);
-        }
+          }
+          return body
+      });
     }
-    context.template.body = body;
-    return context;
+
+    // Replacing embedded templates
+    if(pattern_t.test(body)){
+      let db = promiseTemplates(true)
+      body = swapTokens(body, pattern_t, (raw_token, token, body) => {
+        let t = fetchVal(db.templates, token)
+        if (val !== undefined) {
+          console.log(`[renderer.js] ${raw_token}/${token} = ok`);
+          body = body.replaceAll(raw_token, t.body);
+        } else {
+          console.log(`[renderer.js] template not found ${token}`);
+        }
+        return body
+      })
+
+    }
+      context.template.body = body;
+      return context;  
+    
+
+  }
+
+function swapTokens(body, pattern, callback) {
+  let raw_tokens = [...body.matchAll(pattern)];
+  let tokens = new Map();
+
+  raw_tokens.forEach(token => {
+    tokens.set(token[0], extractTag(token[0]));
+  });
+
+  for (const [raw_token, token] of tokens) {
+   body = callback(raw_token, token, body)
+  }
+  return body;
 }
 
 exports.templatePattern = pattern;

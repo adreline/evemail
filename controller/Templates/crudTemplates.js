@@ -1,5 +1,5 @@
 const { ipcMain } = require('electron');
-const { promises: Fs } = require('fs');
+const { promises: Fs, fs } = require('fs');
 
 const db_stub = '{ "meta": { "i": 0 }, "templates": {}}';
 const db_path = `${global.root}/templates/db.json`;
@@ -83,11 +83,21 @@ function promiseTemplate(id){
 ipcMain.handle('getTemplates', () => promiseTemplates());
 /**
  * Reads templates file and returns template list
- *
- * @return {Promise} 
+ *  
+ * @param {boolean} sync
+ * @return {Promise|Object} 
  */
-function promiseTemplates() {
+function promiseTemplates(sync = false) {
     console.log('[crudTemplates.js] templates list requested');
+    if(sync){
+        try{
+            fs.accessSync(db_path)
+            let db  = fs.readFileSync(db_path, { encoding: 'utf8' })
+            return JSON.parse(db)
+        }catch(e){
+            return db_stub;
+        }
+    }
     return new Promise((resolve, reject) => {
         Fs.access(db_path)
             .then(() => {
