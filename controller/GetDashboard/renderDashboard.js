@@ -8,6 +8,8 @@ const date_picker_o = document.getElementById('date-picker-oldest')
 const table = document.getElementById('member-table')
 const table_body = document.getElementById('member-table-body')
 const select_all_box = document.getElementById('select-all')
+const filter_list_by_names = document.getElementById('filter-list-by-names')
+const name_paste_area = document.getElementById('name-paste-area')
 
 let current_date_y = DateTime.now()
 let current_date_o = DateTime.fromMillis(0)
@@ -64,12 +66,14 @@ function handleFilters(){
         if(event.target.value === '-1'){
             date_picker_y.classList.add(['is-hidden'])
             date_picker_o.classList.add(['is-hidden'])
+            filter_list_by_names.classList.add(['is-hidden'])
             current_date_y = now
             current_date_o = DateTime.fromMillis(0)
         }
         if(event.target.value === '0'){
             date_picker_y.classList.remove(['is-hidden'])
             date_picker_o.classList.add(['is-hidden'])
+            filter_list_by_names.classList.add(['is-hidden'])
             current_date_y = DateTime.fromMillis(0)
             current_date_o = DateTime.fromMillis(0)
             date_picker_y.value = ''
@@ -77,14 +81,23 @@ function handleFilters(){
         if(event.target.value === '1'){
             date_picker_y.classList.add(['is-hidden'])
             date_picker_o.classList.add(['is-hidden'])
+            filter_list_by_names.classList.add(['is-hidden'])
             current_date_y = now.minus({months: 3})
             current_date_o = now.minus({months: 6})
         }
         if(event.target.value === '2'){
             date_picker_y.classList.add(['is-hidden'])
             date_picker_o.classList.add(['is-hidden'])
+            filter_list_by_names.classList.add(['is-hidden'])
+
             current_date_y = now.minus({months: 6})
             current_date_o = DateTime.fromMillis(0)
+        }
+        if(event.target.value === '3'){
+            date_picker_y.classList.add(['is-hidden'])
+            date_picker_o.classList.add(['is-hidden'])
+            filter_list_by_names.classList.remove(['is-hidden'])
+            
         }
 
     })
@@ -102,11 +115,20 @@ function handleFilters(){
  * @return {Array} 
  */
 function applyFilter(members, time_oldest, time_youngest){
-    return members.filter(member => {
-        let last_online = DateTime.fromJSDate(member.logonDate)
-        console.log(`${last_online} > ${time_oldest} && ${last_online} < ${time_youngest}`);
-        return (last_online > time_oldest && last_online < time_youngest)
-    })
+    if(filter_mode.value === '3'){
+        let list = name_paste_area.value.trim().split("\n").map(item => item.trim())
+        console.log(list)
+        list.forEach(item => console.log(item))
+        return members.filter(member => {
+            return list.includes(member.characterName)
+        })
+    }else{
+        return members.filter(member => {
+            let last_online = DateTime.fromJSDate(member.logonDate)
+            console.log(`${last_online} > ${time_oldest} && ${last_online} < ${time_youngest}`);
+            return (last_online > time_oldest && last_online < time_youngest)
+        })
+    }
 }
 /**
  * Writes the content of the members array on the ui
