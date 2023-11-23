@@ -8,6 +8,8 @@ const date_picker_o = document.getElementById('date-picker-oldest')
 const table = document.getElementById('member-table')
 const table_body = document.getElementById('member-table-body')
 const select_all_box = document.getElementById('select-all')
+const btn_logout = document.getElementById('btn-logout')
+btn_logout.addEventListener('click', () => { dashboard.logout() })
 
 let current_date_y = DateTime.now()
 let current_date_o = DateTime.fromMillis(0)
