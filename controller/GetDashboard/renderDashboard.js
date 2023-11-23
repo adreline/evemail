@@ -8,6 +8,8 @@ const date_picker_o = document.getElementById('date-picker-oldest')
 const table = document.getElementById('member-table')
 const table_body = document.getElementById('member-table-body')
 const select_all_box = document.getElementById('select-all')
+const btn_logout = document.getElementById('btn-logout')
+btn_logout.addEventListener('click', () => { dashboard.logout() })
 const filter_list_by_names = document.getElementById('filter-list-by-names')
 const name_paste_area = document.getElementById('name-paste-area')
 
